@@ -8,7 +8,7 @@ package softengproj;
  * @author Brennan Loy
  */
 public class SoftEngProj {
-
+private String namnam;
     /**
      * @param args the command line arguments
      */
