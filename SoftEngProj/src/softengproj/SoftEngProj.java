@@ -1,5 +1,5 @@
 /*
- * Brennan Loy, Yax Barillas, and David Peacock
+ * Brennan Loy, Yax Barillas, and David Peacock.
  */
 package softengproj;
 
