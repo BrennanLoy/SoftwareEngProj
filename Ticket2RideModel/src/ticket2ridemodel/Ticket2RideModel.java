@@ -12,31 +12,7 @@ package ticket2ridemodel;
 
 import java.util.ArrayList;
 
-
-class TrainCard
-{
-    
-    TrainCard(String c){color = c;}
-    String color;        
-}
-    
-class LocomotiveCard
-{
-    String color = "Wild";
-}
-    
-class DestinationTicket
-{
-    DestinationTicket(String n){
-        name = n;
-    }
-    String name;
-}
-
 public class Ticket2RideModel {
-
-
-    
 
     private static void ticket2RideSetup(ArrayList<Player> order){
         displayBoard();
@@ -44,6 +20,15 @@ public class Ticket2RideModel {
         for(int i = 0; i < numPlayers; i++)
             order.add(new Player()); 
         }
+    private static TrainCard drawTrainCardTurn(Player p){
+        return p; //Return to this
+    }
+    private static DestinationTicket drawDestinationTicketTurn(Player p){
+        return p; //Return to this
+    }
+    private static Route claimRouteTurn(Player p){
+        return p; //Return to this
+    }
     
     
     public static void main(String[] args) {
