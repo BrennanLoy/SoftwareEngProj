@@ -1,8 +1,8 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Wed 24 Oct 2018 @ 11:59 PM
-    HW_4
+    Due: Mon 5 Nov 2018 @ 11:59 PM
+    HW_5
 */
 
 package ticket2rideview;
@@ -10,19 +10,21 @@ package ticket2rideview;
 import java.util.Scanner;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
-// import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -35,7 +37,7 @@ import javafx.stage.Stage;
 
 public class Ticket2RideView extends Application
 {
-    
+    // TrainCards are "hard-wired" (temporarily)
     TrainCard player1TrainCard1 = new TrainCard();  
     //player1TrainCard1.setTrainCarType("BOX");
     TrainCard player1TrainCard2 = new TrainCard();
@@ -53,7 +55,8 @@ public class Ticket2RideView extends Application
     Markers player1Marker = new Markers(1, 0);
 
     // *****   ***   *****
-    
+
+    // TrainCards are "hard-wired" (temporarily)
     TrainCard player2TrainCard1 = new TrainCard();
     //player2TrainCard1.setTrainCarType("FREIGHT");    
     TrainCard player2TrainCard2 = new TrainCard();
@@ -109,8 +112,7 @@ public class Ticket2RideView extends Application
     
     // Setter
     public void setPlayerTrainCard(int playerNo, int cardNo, String trainType)
-    {
-        
+    {   
         if(playerNo == 1)
         {
             for(int i = 0; i < 4; i++)
@@ -196,21 +198,9 @@ public class Ticket2RideView extends Application
             deck5TrainCard5.trainCarType = trainType;         
     }
     
-    public boolean wannaPlay()
+    public void wannaPlay()
     {
-        System.out.println("Do you want to play Ticket to Ride? ");
-        boolean answer = false;
-        Scanner sc = new Scanner(System.in);
-        String reply = sc.next();
-        
-        if (reply == "YES" || reply == "yes" || reply == "Yes")
-            answer = true;
-        else if (reply == "NO" || reply == "no" || reply == "No")
-            answer = false;
-        else
-            System.out.println("invalid response");
-        
-        return answer;
+        System.out.println("Come play Ticket to Ride! Press Start. ");  
     }
     
     public int takeATurn()
@@ -266,7 +256,7 @@ public class Ticket2RideView extends Application
         else return false;
     }
     
-    // *****   ***   *****   ***   *****   ***   *****   ***   *****
+    // *****   ***   *****   ***   *****   ***   *****   ***   *****   ***   *****
     
     public static void main(String[] args)
     {  launch(Ticket2RideView.class, args); }
@@ -274,84 +264,133 @@ public class Ticket2RideView extends Application
     @Override
     public void start(Stage stage)
     {
-        // Set up BorderPane as scene root
-        BorderPane border = new BorderPane();
+        // BorderPane is the scene root
+        BorderPane root = new BorderPane();
         
-        HBox hbox = addHBox();
-        border.setTop(hbox);
-        border.setLeft(addFlowPaneLeft());  
+        HBox hbox = addHBoxTop();
+        root.setTop(hbox);
+        addStackPaneTop(hbox);         
+       
+        root.setLeft(addFlowPaneLeft());  
         
-        // Add stack to HBox (top region)
-        addStackPane(hbox);  
-     
-        border.setCenter(addGridPane());
-        // border.setCenter(addAnchorPane(addGridPane()));
-        
-        border.setRight(addFlowPaneRight());
-        // border.setRight(addTilePane());
+        StackPane stack = addStackPaneCenter();
+        root.setCenter(stack);
+   
+        root.setRight(addFlowPaneRight());
 
-        HBox hbox2 = addHBox();
-        border.setBottom(addFlowPaneBottom());
-        
-        // Add stack to HBox (bottom region)
-        addStackPane(hbox2);
+        HBox hbox2 = addHBoxBottom();
+        root.setBottom(addFlowPaneBottom());
+        addStackPaneBottom(hbox2);
 
-        Scene scene = new Scene(border);
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Ticket2RideView");
         stage.show();
+        
+        //stage.setTitle("View");
+        //stage.show();
     }
 
-    // Creates HBox with two buttons (for top region)
-    private HBox addHBox() {
+    // Creates HBox with a Start button (for top region)
+    private HBox addHBoxTop() {
 
         HBox hbox = new HBox();
         hbox.setPadding(new Insets(15, 12, 15, 12));
         hbox.setSpacing(10);   // Gap between nodes
         hbox.setStyle("-fx-background-color: #336699;");
 
-        Button buttonPlayer1 = new Button("Player1");
-        buttonPlayer1.setPrefSize(100, 20);
-
-        Button buttonPlayer2 = new Button("Player2");
-        buttonPlayer2.setPrefSize(100, 20);
+        Button startButton = new Button("Start");
+        startButton.setPrefSize(100, 20);
         
-        hbox.getChildren().addAll(buttonPlayer1, buttonPlayer2);
+        DropShadow shadow = new DropShadow();
+        startButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>()
+            {
+                @Override public void handle(MouseEvent e)
+                {
+                    startButton.setEffect(shadow);
+                    //startTicket2Ride();   // Uncomment at integration time
+                    System.out.println("Controller Method has been called!");
+                }
+            });
+  
+        hbox.getChildren().addAll(startButton);
         
         return hbox;
     }
-    
-    // Uses stack pane to create a help icon / adds to the right side of HBox
-    private void addStackPane(HBox hb) {
 
+    // Creates HBox to hold StackPane (for bottom region)
+    private HBox addHBoxBottom()
+    {
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);   // Gap between nodes
+        hbox.setStyle("-fx-background-color: #336699;");
+
+        Button tbd = new Button("tbd");
+        tbd.setPrefSize(100, 20);
+        
+        hbox.getChildren().addAll(tbd);
+        
+        return hbox;
+    }
+
+    // Uses stack pane to create a help icon / adds to the right side of HBox
+    private void addStackPaneTop(HBox hb)
+    {
         StackPane stack = new StackPane();
-        Rectangle helpIcon = new Rectangle(30.0, 25.0);
-        helpIcon.setFill(new LinearGradient(0,0,0,1, true, CycleMethod.NO_CYCLE,
+        
+        Rectangle startIcon = new Rectangle(30.0, 25.0);
+        startIcon.setFill(new LinearGradient(0,0,0,1, true, CycleMethod.NO_CYCLE,
             new Stop[]{
             new Stop(0,Color.web("#4977A3")),
             new Stop(0.5, Color.web("#B0C6DA")),
             new Stop(1,Color.web("#9CB6CF")),}));
-        helpIcon.setStroke(Color.web("#D0E6FA"));
-        helpIcon.setArcHeight(3.5);
-        helpIcon.setArcWidth(3.5);
+        startIcon.setStroke(Color.web("#D0E6FA"));
+        startIcon.setArcHeight(3.5);
+        startIcon.setArcWidth(3.5);
         
-        Text helpText = new Text("?");
-        helpText.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-        helpText.setFill(Color.WHITE);
-        helpText.setStroke(Color.web("#7080A0")); 
+        Text showTCards = new Text("T");
+        showTCards.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
+        showTCards.setFill(Color.WHITE);
+        showTCards.setStroke(Color.web("#7080A0")); 
         
-        stack.getChildren().addAll(helpIcon, helpText);
+        stack.getChildren().addAll(startIcon, showTCards);
         stack.setAlignment(Pos.CENTER_RIGHT);
         // Add offset to right for question mark to compensate for RIGHT 
         // alignment of all nodes
-        StackPane.setMargin(helpText, new Insets(0, 10, 0, 0));
+        StackPane.setMargin(showTCards, new Insets(0, 10, 0, 0));
         
         hb.getChildren().add(stack);
         HBox.setHgrow(stack, Priority.ALWAYS);        
     }
-    
-    private GridPane addGridPane() {
 
+    // Uses stack pane to create a help icon / adds to the right side of HBox
+    private StackPane addStackPaneCenter()
+    {
+        StackPane stack = new StackPane();
+        
+        ImageView boardImage = new ImageView(
+        new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));
+      
+        stack.getChildren().add(boardImage);
+        stack.setAlignment(Pos.CENTER);
+       
+        return stack;
+    }
+
+    private void addStackPaneBottom(HBox hb)
+    {
+        StackPane stack = new StackPane();
+
+        stack.setAlignment(Pos.CENTER_RIGHT);
+ 
+        hb.getChildren().add(stack);
+        HBox.setHgrow(stack, Priority.ALWAYS);        
+    }
+
+    private GridPane addGridPane()
+    {
         GridPane grid = new GridPane();
         // grid.setAlignment(Pos.TOP_LEFT);
         grid.setHgap(10);
@@ -528,51 +567,4 @@ public class Ticket2RideView extends Application
 
         return flow;
     }
-
-/*
-    private TilePane addTilePane() {
-        
-        TilePane tile = new TilePane();
-        tile.setPadding(new Insets(5, 0, 5, 0));
-        tile.setVgap(4);
-        tile.setHgap(4);
-        tile.setPrefColumns(2);
-        tile.setStyle("-fx-background-color: DAE6F3;");
-
-        ImageView pages[] = new ImageView[8];
-        for (int i=0; i<8; i++) {
-            pages[i] = new ImageView(
-                    new Image(Ticket2RideView.class.getResourceAsStream(
-                    "graphics/chart_"+(i+1)+".png")));
-            tile.getChildren().add(pages[i]);
-        }
-
-        return tile;
-    }
-*/ 
-
-    // Creates an anchor pane using the provided grid and an HBox with buttons
-    // @param grid Grid to anchor to the top of the anchor pane
-    /*
-    private AnchorPane addAnchorPane(GridPane grid) {
-
-        AnchorPane anchorpane = new AnchorPane();
-        
-        Button buttonSave = new Button("Save");
-        Button buttonCancel = new Button("Cancel");
-
-        HBox hb = new HBox();
-        hb.setPadding(new Insets(0, 10, 10, 10));
-        hb.setSpacing(10);
-        hb.getChildren().addAll(buttonSave, buttonCancel);
-
-        anchorpane.getChildren().addAll(grid,hb);
-        // Anchor buttons to bottom right, anchor grid to top
-        AnchorPane.setBottomAnchor(hb, 8.0);
-        AnchorPane.setRightAnchor(hb, 5.0);
-        AnchorPane.setTopAnchor(grid, 10.0);
-
-        return anchorpane;
-    }
-    */
 }
