@@ -1,7 +1,7 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Mon 5 Nov 2018 @ 11:59 PM
+    Due: Wed 7 Nov 2018 @ 11:59 PM
     HW_5
 */
 
@@ -15,6 +15,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -275,6 +276,7 @@ public class Ticket2RideView extends Application
         
         StackPane stack = addStackPaneCenter();
         root.setCenter(stack);
+        //addGridPaneCenter(stack);
    
         root.setRight(addFlowPaneRight());
 
@@ -389,23 +391,24 @@ public class Ticket2RideView extends Application
         HBox.setHgrow(stack, Priority.ALWAYS);        
     }
 
-    private GridPane addGridPane()
+    private GridPane addGridPaneCenter(StackPane stack)
     {
         GridPane grid = new GridPane();
-        // grid.setAlignment(Pos.TOP_LEFT);
+
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 10, 0, 10));
         
-        grid.setColumnSpan(grid, 1025);
-        //grid.setColumnSpan(grid, 1025);       
+        grid.setColumnSpan(grid, 1025);  
         grid.setRowSpan(grid, 680);
-
-        // House icon in column 1, rows 1-2
-        ImageView imageBoard = new ImageView(
-        new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));
-        grid.add(imageBoard, 0, 0, 1, 2);       
-
+        /*
+        Label label = new Label("XXXXXXXXXXXXX");
+        grid.add(label, 100, 100);
+        
+        Button testButton = new Button("TEST");
+        testButton.setPrefSize(100, 20);
+        grid.add(testButton, 100, 20);
+        */
         // grid.setGridLinesVisible(true);
         return grid;
     }    
@@ -427,7 +430,6 @@ public class Ticket2RideView extends Application
             new Image(Ticket2RideView.class.getResourceAsStream(
             player1TrainCard1.getJPGImage()))); 
             //"Box_scale79.jpg")));
-        
         flow.getChildren().add(trainCards[0]);        
 
         trainCards[1] = new ImageView(
