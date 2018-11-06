@@ -8,17 +8,10 @@
 package ticket2rideview;
 
 import java.util.Scanner;
-import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -26,18 +19,36 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Ticket2RideView extends Application
 {
+    final Label name = new Label("\nTicket-To-Ride Game");   
+    final ImageView pic = new ImageView(
+        new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));   
+    final Label introduction = new Label("                    Alan R. Moon's \n" +
+                                          "              Ticket-To-Ride Game \n" +
+                                        "The Cross-Country Train Adventure Game");
+  
     // TrainCards are "hard-wired" (temporarily)
     TrainCard player1TrainCard1 = new TrainCard();  
     //player1TrainCard1.setTrainCarType("BOX");
@@ -265,6 +276,83 @@ public class Ticket2RideView extends Application
     @Override
     public void start(Stage stage)
     {
+        
+    // *************************************************************************************************************************************************   
+        
+        Scene scene = new Scene(new VBox(), 400, 350);
+        scene.setFill(Color.OLDLACE);
+
+        name.setFont(new Font("Verdana Bold", 22));
+        pic.setFitHeight(150);
+        pic.setPreserveRatio(true);
+
+        MenuBar menuBar = new MenuBar();
+
+        // *** Menu Box
+        final VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(10);        
+        vbox.setPadding(new Insets(0, 10, 0, 10));
+        vbox.getChildren().addAll(name, pic, introduction);
+
+        // *** Game SubMenu
+        Menu menuFile = new Menu("Game");
+        MenuItem add = new MenuItem("Set Player",
+            new ImageView(new Image("ticket2rideview/new.png")));
+        
+        add.setOnAction((ActionEvent t) -> {
+            //setPlayer();
+            vbox.setVisible(true);
+        });
+
+        MenuItem clear = new MenuItem("Clear");
+        clear.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
+        clear.setOnAction((ActionEvent t) -> {
+            vbox.setVisible(false);
+        });
+
+        MenuItem exit = new MenuItem("Exit");
+        exit.setOnAction((ActionEvent t) -> {
+            System.exit(0);
+        });
+
+        menuFile.getItems().addAll(add, clear, new SeparatorMenuItem(), exit);
+
+        // *** Draw Train Card Menu
+        Menu menuTrainCards = new Menu("Draw Train Cards");
+        
+        // Train Card 1
+        Menu menuDrawTrainCard1 = new Menu("Draw Train Card 1");
+        MenuItem faceupChoice1 = new MenuItem("Take Face-up card");
+        MenuItem deckChoice1 = new MenuItem("Draw from the deck");
+        menuDrawTrainCard1.getItems().add(faceupChoice1);
+        menuDrawTrainCard1.getItems().add(deckChoice1);            
+        menuTrainCards.getItems().addAll(menuDrawTrainCard1);
+
+        // Train Card 2
+        Menu menuDrawTrainCard2 = new Menu("Draw Train Card 2");
+        MenuItem faceupChoice2 = new MenuItem("Take Face-up card");
+        MenuItem deckChoice2 = new MenuItem("Draw from the deck");
+        menuDrawTrainCard2.getItems().add(faceupChoice2);
+        menuDrawTrainCard2.getItems().add(deckChoice2);            
+        menuTrainCards.getItems().addAll(menuDrawTrainCard2);       
+
+        Menu menuClaimARoute = new Menu("Claim-A-Route");
+        MenuItem ticket1 = new MenuItem("San Francisco - Los Angeles");
+        menuClaimARoute.getItems().add(ticket1);
+        menuDrawTrainCard1.getItems().add(deckChoice1);            
+        menuClaimARoute.getItems().addAll(ticket1);
+ 
+        Menu menuDrawTickets = new Menu("Draw Tickets");       
+
+        menuBar.getMenus().addAll(menuFile, menuTrainCards, menuClaimARoute, menuDrawTickets);        
+        ((VBox) scene.getRoot()).getChildren().addAll(menuBar, vbox);
+
+        stage.setScene(scene);
+        stage.show();        
+
+    // *************************************************************************************************************************************************   
+        
         // BorderPane is the scene root
         BorderPane root = new BorderPane();
         
@@ -276,7 +364,6 @@ public class Ticket2RideView extends Application
         
         StackPane stack = addStackPaneCenter();
         root.setCenter(stack);
-        //addGridPaneCenter(stack);
    
         root.setRight(addFlowPaneRight());
 
@@ -284,13 +371,8 @@ public class Ticket2RideView extends Application
         root.setBottom(addFlowPaneBottom());
         addStackPaneBottom(hbox2);
 
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
         stage.setTitle("Ticket2RideView");
         stage.show();
-        
-        //stage.setTitle("View");
-        //stage.show();
     }
 
     // Creates HBox with a Start button (for top region)
@@ -301,7 +383,7 @@ public class Ticket2RideView extends Application
         hbox.setSpacing(10);   // Gap between nodes
         hbox.setStyle("-fx-background-color: #336699;");
 
-        Button startButton = new Button("Start");
+        Button startButton = new Button("Play");
         startButton.setPrefSize(100, 20);
         
         DropShadow shadow = new DropShadow();
@@ -359,7 +441,7 @@ public class Ticket2RideView extends Application
         
         stack.getChildren().addAll(startIcon, showTCards);
         stack.setAlignment(Pos.CENTER_RIGHT);
-        // Add offset to right for question mark to compensate for RIGHT 
+        // Add offset to right for "T" to compensate for RIGHT 
         // alignment of all nodes
         StackPane.setMargin(showTCards, new Insets(0, 10, 0, 0));
         
@@ -375,7 +457,13 @@ public class Ticket2RideView extends Application
         ImageView boardImage = new ImageView(
         new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));
       
-        stack.getChildren().add(boardImage);
+        // ***
+        GridPane grid = new GridPane();
+        grid = addGridPaneCenter(stack);
+
+        stack.getChildren().add(boardImage); 
+        stack.getChildren().add(grid);
+        stack.getChildren().addAll();
         stack.setAlignment(Pos.CENTER);
        
         return stack;
@@ -391,25 +479,25 @@ public class Ticket2RideView extends Application
         HBox.setHgrow(stack, Priority.ALWAYS);        
     }
 
-    private GridPane addGridPaneCenter(StackPane stack)
+    private GridPane addGridPaneCenter(StackPane stack)         
     {
         GridPane grid = new GridPane();
 
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(0, 10, 0, 10));
-        
+
+        //No Padding needs to be set for this method
+        //grid.setPadding(new Insets(0, 0, 0, 0));        
+              
         grid.setColumnSpan(grid, 1025);  
         grid.setRowSpan(grid, 680);
-        /*
-        Label label = new Label("XXXXXXXXXXXXX");
-        grid.add(label, 100, 100);
-        
-        Button testButton = new Button("TEST");
-        testButton.setPrefSize(100, 20);
-        grid.add(testButton, 100, 20);
-        */
-        // grid.setGridLinesVisible(true);
+     
+        // This code puts a "@" in the middle of the San Franciso to
+        // Los Angeles route to show that it has been taken by the player
+        Label label1 = new Label("@");
+        grid.add(label1, 9, 46);
+       
+        //grid.setGridLinesVisible(true);
         return grid;
     }    
 
