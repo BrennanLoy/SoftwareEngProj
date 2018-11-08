@@ -1,7 +1,7 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Wed 7 Nov 2018 @ 11:59 PM
+    Due: Fri 9 Nov 2018 @ 11:59 PM
     HW_5
 */
 
@@ -42,317 +42,61 @@ import javafx.stage.Stage;
 
 public class Ticket2RideView extends Application
 {
+    // THIS CODE WILL MOVE INTO "ABOUT" SUBMENU .... LATER!
     final Label name = new Label("\nTicket-To-Ride Game");   
     final ImageView pic = new ImageView(
         new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));   
     final Label introduction = new Label("                    Alan R. Moon's \n" +
                                           "              Ticket-To-Ride Game \n" +
                                         "The Cross-Country Train Adventure Game");
-  
-    // TrainCards are "hard-wired" (temporarily)
-    TrainCard player1TrainCard1 = new TrainCard();  
-    //player1TrainCard1.setTrainCarType("BOX");
-    TrainCard player1TrainCard2 = new TrainCard();
-    //player1TrainCard2.setTrainCarType("PASSENGER");    
-    TrainCard player1TrainCard3 = new TrainCard();
-     //player1TrainCard3.setTrainCarType("TANKER");   
-    TrainCard player1TrainCard4 = new TrainCard();
-    //player1TrainCard4.setTrainCarType("REEFER");
+
+    // ************************************************************************** INITIALIZE BOARD ELEMENTS
     
-    // Tickets are "hard-wired" (temporarily)
+    String Player1, Player2;
+    
+    // Initial Train Card Values: Preset for show / Reset when game starts
+    TrainCard player1TrainCard1 = new TrainCard("BOX");  
+    TrainCard player1TrainCard2 = new TrainCard("PASSENGER"); 
+    TrainCard player1TrainCard3 = new TrainCard("TANKER");
+    TrainCard player1TrainCard4 = new TrainCard("REEFER");
+
+    TrainCard player2TrainCard1 = new TrainCard("FREIGHT"); 
+    TrainCard player2TrainCard2 = new TrainCard("HOPPER");  
+    TrainCard player2TrainCard3 = new TrainCard("COAL");
+    TrainCard player2TrainCard4 = new TrainCard("CABOOSE");
+
+    // Initial Ticket Values: Preset for show / Reset when game starts
     Ticket player1Ticket1 = new Ticket();
     Ticket player1Ticket2 = new Ticket();
     Ticket player1Ticket3 = new Ticket();
-    
-    Markers player1Marker = new Markers(1, 0);
 
-    // *****   ***   *****
-
-    // TrainCards are "hard-wired" (temporarily)
-    TrainCard player2TrainCard1 = new TrainCard();
-    //player2TrainCard1.setTrainCarType("FREIGHT");    
-    TrainCard player2TrainCard2 = new TrainCard();
-    //player2TrainCard2.setTrainCarType("HOPPER");    
-    TrainCard player2TrainCard3 = new TrainCard();
-    //player2TrainCard3.setTrainCarType("COAL");    
-    TrainCard player2TrainCard4 = new TrainCard();
-    //player2TrainCard4.setTrainCarType("CABOOSE");    
-    
-    // Tickets are "hard-wired" (temporarily)
     Ticket player2Ticket1 = new Ticket();
     Ticket player2Ticket2 = new Ticket();
     Ticket player2Ticket3 = new Ticket();
-    
+
+    // Markers are at start position (Initially)
+    Markers player1Marker = new Markers(1, 0);
     Markers player2Marker = new Markers(2, 0);
  
-    TrainCard deck5TrainCard1 = new TrainCard();
-    TrainCard deck5TrainCard2 = new TrainCard();    
-    TrainCard deck5TrainCard3 = new TrainCard();    
-    TrainCard deck5TrainCard4 = new TrainCard();    
-    TrainCard deck5TrainCard5 = new TrainCard();    
+    // Initial Deck5 Train Card Values: Preset for show / Reset when game starts
+    TrainCard deck5TrainCard1 = new TrainCard("BOX");
+    TrainCard deck5TrainCard2 = new TrainCard("PASSENGER");    
+    TrainCard deck5TrainCard3 = new TrainCard("REEFER");    
+    TrainCard deck5TrainCard4 = new TrainCard("HOPPER");    
+    TrainCard deck5TrainCard5 = new TrainCard("CABOOSE");    
     
     LPBonus longestPathBonus = new LPBonus();   
- 
-    // *****   ***   *****
-
-    /*
-    // When I uncomment this constructor, I have a runtime problem.
-    // even if the Constructor body is empty!
-    // Constructor
-    Ticket2RideView()
-    {
-        player1TrainCard1.trainCarType = "BOX";        
-        player1TrainCard2.trainCarType = "CABOOSE";        
-        player1TrainCard3.trainCarType = "COAL";
-        player1TrainCard4.trainCarType = "FREIGHT";
-
-
-        player1Ticket1.origin_destination = "Montreal_Chicago";
-        player1Ticket2.origin_destination = "Vancouver_Portland";     
-        player1Ticket3.origin_destination = "Boston_Washington";
-        
-        player2TrainCard1.trainCarType = "BOX";        
-        player2TrainCard2.trainCarType = "CABOOSE";        
-        player2TrainCard3.trainCarType = "COAL";
-        player2TrainCard4.trainCarType = "FREIGHT";
-
-        player2Ticket1.origin_destination = "Montreal_Chicago";
-        player2Ticket2.origin_destination = "Vancouver_Portland";     
-        player2Ticket3.origin_destination = "Boston_Washington";
-    }
-    */
-    
-    // Setter
-    public void setPlayerTrainCard(int playerNo, int cardNo, String trainType)
-    {   
-        if(playerNo == 1)
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                if(cardNo == 1)
-                    player1TrainCard1.setTrainCarType(trainType);
-                else if(cardNo == 2)
-                    player1TrainCard2.setTrainCarType(trainType);
-                else if(cardNo == 3)
-                    player1TrainCard3.setTrainCarType(trainType);
-                else if(cardNo == 4)
-                    player1TrainCard4.setTrainCarType(trainType);
-            }
-        }
-        
-        else if(playerNo == 2)
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                if(cardNo == 1)
-                    player2TrainCard1.setTrainCarType(trainType);
-                else if(cardNo == 2)
-                    player2TrainCard2.setTrainCarType(trainType);
-                else if(cardNo == 3)
-                    player2TrainCard3.setTrainCarType(trainType);
-                else if(cardNo == 4)
-                    player2TrainCard4.setTrainCarType(trainType);
-            }       
-        }  
-    }
-    
-    // Setter
-    public void setDestinationTicket(int playerNo, int cardNo, String orig_des)
-    {
-        if(playerNo ==1)
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                if(cardNo == 1)
-                    player1Ticket1.origin_destination = orig_des;
-                if(cardNo == 2)
-                    player1Ticket2.origin_destination = orig_des;               
-                if(cardNo == 3)
-                    player1Ticket3.origin_destination = orig_des;              
-            }
-        }
-        
-        if(playerNo ==2)
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                if(cardNo == 1)
-                    player2Ticket1.origin_destination = orig_des;
-                if(cardNo == 2)
-                    player2Ticket2.origin_destination = orig_des;               
-                if(cardNo == 3)
-                    player2Ticket3.origin_destination = orig_des;              
-            }
-        }            
-    }
-    
-    // Setter
-    public void setMarker(int playerNo, int pos)
-    {
-        if(playerNo == 1)
-            player1Marker.redPosition = pos;
-        if(playerNo == 2)
-            player2Marker.bluePosition = pos; 
-    }
- 
-    // Setter
-    public void setDeck5TrainCards(int cardNo, String trainType)
-    {
-        if(cardNo == 1)
-            deck5TrainCard1.trainCarType = trainType;
-        if(cardNo == 2)
-            deck5TrainCard2.trainCarType = trainType;       
-        if(cardNo == 3)
-            deck5TrainCard3.trainCarType = trainType;
-        if(cardNo == 4)
-            deck5TrainCard4.trainCarType = trainType;        
-        if(cardNo == 5)
-            deck5TrainCard5.trainCarType = trainType;         
-    }
-    
-    public void wannaPlay()
-    {
-        System.out.println("Come play Ticket to Ride! Press Start. ");  
-    }
-    
-    public int takeATurn()
-    {
-        System.out.println("Select: \n");
-        System.out.println("1. Draw 2 Train Cards\n");
-        System.out.println("2. Claim a Route\n");
-        System.out.println("3. Draw 3 Destination Tickets\n");
-        Scanner sc2 = new Scanner(System.in);
-        int playersChoice = sc2.nextInt();
-        return playersChoice;
-        
-    }
-    
-    public int draw1TrainCard()
-    {
-        System.out.println("Select a Train Card: ");
-        System.out.println("1. Face-up Card #1");
-        System.out.println("2. Face-up Card #2");        
-        System.out.println("3. Face-up Card #3");        
-        System.out.println("4. Face-up Card #4");        
-        System.out.println("5. Face-up Card #5");        
-        System.out.println("6. Top Card from Deck");       
-        
-        Scanner sc3 = new Scanner(System.in);
-        int trainCardChoice = sc3.nextInt();
-        return trainCardChoice;
-    }
-    
-    public void claimARoute(int playerNo, String origin_destination)
-    {
-        System.out.println("What route do you wish to claim?");
-        Scanner sc4 = new Scanner(System.in);
-        String route = sc4.next();
-        
-        if (origin_destination == "San Francisco_Los Angeles")
-        {
-            // put x's in boxes between origin and destination
-        }
-    }   
-    
-    public boolean  returnDestinationTicket()
-    {
-        System.out.println("Do you wish to return a ticket?");
-        System.out.println("Yes or No");
-        Scanner sc5 = new Scanner(System.in);
-        String answer = sc5.next();
-        
-        if (answer == "Yes" || answer == "yes" || answer == "Yes"
-                            || answer == "Y" || answer == "y")
-            return true;
-        
-        else return false;
-    }
-    
-    // *****   ***   *****   ***   *****   ***   *****   ***   *****   ***   *****
+   
+    // ************************************************************************** MAIN()
     
     public static void main(String[] args)
     {  launch(Ticket2RideView.class, args); }
 
+    // ************************************************************************** START()
+     
     @Override
     public void start(Stage stage)
-    {
-        
-    // *************************************************************************************************************************************************   
-        
-        Scene scene = new Scene(new VBox(), 400, 350);
-        scene.setFill(Color.OLDLACE);
-
-        name.setFont(new Font("Verdana Bold", 22));
-        pic.setFitHeight(150);
-        pic.setPreserveRatio(true);
-
-        MenuBar menuBar = new MenuBar();
-
-        // *** Menu Box
-        final VBox vbox = new VBox();
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10);        
-        vbox.setPadding(new Insets(0, 10, 0, 10));
-        vbox.getChildren().addAll(name, pic, introduction);
-
-        // *** Game SubMenu
-        Menu menuFile = new Menu("Game");
-        MenuItem add = new MenuItem("Set Player",
-            new ImageView(new Image("ticket2rideview/new.png")));
-        
-        add.setOnAction((ActionEvent t) -> {
-            //setPlayer();
-            vbox.setVisible(true);
-        });
-
-        MenuItem clear = new MenuItem("Clear");
-        clear.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
-        clear.setOnAction((ActionEvent t) -> {
-            vbox.setVisible(false);
-        });
-
-        MenuItem exit = new MenuItem("Exit");
-        exit.setOnAction((ActionEvent t) -> {
-            System.exit(0);
-        });
-
-        menuFile.getItems().addAll(add, clear, new SeparatorMenuItem(), exit);
-
-        // *** Draw Train Card Menu
-        Menu menuTrainCards = new Menu("Draw Train Cards");
-        
-        // Train Card 1
-        Menu menuDrawTrainCard1 = new Menu("Draw Train Card 1");
-        MenuItem faceupChoice1 = new MenuItem("Take Face-up card");
-        MenuItem deckChoice1 = new MenuItem("Draw from the deck");
-        menuDrawTrainCard1.getItems().add(faceupChoice1);
-        menuDrawTrainCard1.getItems().add(deckChoice1);            
-        menuTrainCards.getItems().addAll(menuDrawTrainCard1);
-
-        // Train Card 2
-        Menu menuDrawTrainCard2 = new Menu("Draw Train Card 2");
-        MenuItem faceupChoice2 = new MenuItem("Take Face-up card");
-        MenuItem deckChoice2 = new MenuItem("Draw from the deck");
-        menuDrawTrainCard2.getItems().add(faceupChoice2);
-        menuDrawTrainCard2.getItems().add(deckChoice2);            
-        menuTrainCards.getItems().addAll(menuDrawTrainCard2);       
-
-        Menu menuClaimARoute = new Menu("Claim-A-Route");
-        MenuItem ticket1 = new MenuItem("San Francisco - Los Angeles");
-        menuClaimARoute.getItems().add(ticket1);
-        menuDrawTrainCard1.getItems().add(deckChoice1);            
-        menuClaimARoute.getItems().addAll(ticket1);
- 
-        Menu menuDrawTickets = new Menu("Draw Tickets");       
-
-        menuBar.getMenus().addAll(menuFile, menuTrainCards, menuClaimARoute, menuDrawTickets);        
-        ((VBox) scene.getRoot()).getChildren().addAll(menuBar, vbox);
-
-        stage.setScene(scene);
-        stage.show();        
-
-    // *************************************************************************************************************************************************   
-        
+    {  
         // BorderPane is the scene root
         BorderPane root = new BorderPane();
         
@@ -370,12 +114,17 @@ public class Ticket2RideView extends Application
         HBox hbox2 = addHBoxBottom();
         root.setBottom(addFlowPaneBottom());
         addStackPaneBottom(hbox2);
-
+        
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
         stage.setTitle("Ticket2RideView");
         stage.show();
     }
 
-    // Creates HBox with a Start button (for top region)
+    // ************************************************************************** BEGIN TOP BORDERPANE 
+    
+        // CREATES HBOX FOR TOP PANE:
+        // INCLUDES: Player1 Button - Main Menu - Player2 Button - T Button
     private HBox addHBoxTop() {
 
         HBox hbox = new HBox();
@@ -383,43 +132,250 @@ public class Ticket2RideView extends Application
         hbox.setSpacing(10);   // Gap between nodes
         hbox.setStyle("-fx-background-color: #336699;");
 
-        Button startButton = new Button("Play");
-        startButton.setPrefSize(100, 20);
+    // ********************************************************* PLAYER1 BUTTON      
+
+        Button player1 = new Button("Player1");
+        player1.setPrefSize(100, 20);
         
         DropShadow shadow = new DropShadow();
-        startButton.addEventHandler(MouseEvent.MOUSE_ENTERED,
-            new EventHandler<MouseEvent>()
-            {
-                @Override public void handle(MouseEvent e)
-                {
-                    startButton.setEffect(shadow);
-                    //startTicket2Ride();   // Uncomment at integration time
-                    System.out.println("Controller Method has been called!");
-                }
-            });
+        player1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    player1.setEffect(shadow); } });
+        
+        player1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Player1 Button has been clicked!"); } });       
   
-        hbox.getChildren().addAll(startButton);
+    // ****************************************************** MAIN MENUBAR VBOX
+    
+        // Note: not needed anymore? .... deal with it later
+        Scene scene = new Scene(new VBox(), 400, 350);
+        scene.setFill(Color.OLDLACE);
+
+        name.setFont(new Font("Verdana Bold", 22));
+        pic.setFitHeight(150);
+        pic.setPreserveRatio(true);
+
+        MenuBar menuBar = new MenuBar();
+
+        // *** Menu Box
+        final VBox vbox = new VBox();
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(10);        
+        vbox.setPadding(new Insets(0, 10, 0, 10));
+        vbox.getChildren().addAll(name, pic, introduction);
         
+    // *********************************************************** GAME SUBMENU
+
+        Menu menuGame = new Menu("Game");
+        
+        Menu menuSetPlayer = new Menu("Set Player");
+        
+    // ******************************************************* SET PLAYER1 NAME
+    
+        MenuItem setNamePlayer1 = new MenuItem("Player 1 Name");
+        setNamePlayer1.setOnAction((ActionEvent t) -> {  
+            System.out.println("Enter name for Player 1: ");   
+            Scanner scan = new Scanner(System.in);
+            String p1 = scan.next();
+            setPlayer1Name(p1);        // ************************************************************************************** METHOD FOR CONTROLLER !!!
+            Player1 = p1;   // for my local Player1 String
+            vbox.setVisible(true);
+        });
+        
+    // ******************************************************* SET PLAYER2 NAME
+    
+        MenuItem setNamePlayer2 = new MenuItem("Player 2 Name");
+        setNamePlayer2.setOnAction((ActionEvent t) -> {  
+            System.out.println("Enter name for Player 2: ");
+            Scanner scan = new Scanner(System.in);
+            String p2 = scan.next();
+            setPlayer1Name(p2);        // ************************************************************************************** METHOD FOR CONTROLLER !!!           
+            vbox.setVisible(true);
+        });
+
+        menuSetPlayer.getItems().add(setNamePlayer1);
+        menuSetPlayer.getItems().add(setNamePlayer2);            
+        menuGame.getItems().addAll(menuSetPlayer);         
+    
+    // ************************************************************* GAME RULES
+    
+            // THIS IS FOR FUTURE DEVELOPMENT
+        MenuItem showGameRules = new MenuItem("Game Rules");
+        showGameRules.setOnAction((ActionEvent t) -> {  
+            System.out.println("Game Rules (For Future Development) ");
+            vbox.setVisible(true);
+        });
+
+    // ************************************************************ RESET BOARD
+    
+            // THIS WILL BECOME "RESET BOARD"
+        MenuItem clear = new MenuItem("Reset Board");
+        clear.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
+        clear.setOnAction((ActionEvent t) -> {
+            vbox.setVisible(false);
+        });
+
+    // ****************************************************************** QUIT
+        MenuItem exit = new MenuItem("Quit");
+        exit.setOnAction((ActionEvent t) -> {
+            System.exit(0);
+        });
+
+        menuGame.getItems().addAll(menuSetPlayer, showGameRules, clear,
+                                            new SeparatorMenuItem(), exit);
+
+    // ************************************************** DRAW TRAIN CARDS MENU
+ 
+        // *** Draw Train Cards Menu
+        Menu menuTrainCards = new Menu("Draw Train Cards");
+
+    // ****************************************************** DRAW TRAIN CARD 1
+    
+        // PLAYER SELECTS HIS FIRST TRAIN CARD (TRAIN CARD 1)
+        Menu menuDrawTrainCard1 = new Menu("Draw Train Card 1");
+        
+        // PLAYER CHOOSES TO TAKE FACE-UP TRAIN CARD
+        MenuItem TC1_Choice1_FaceUp = new MenuItem("Take Face-up card");
+        TC1_Choice1_FaceUp.setOnAction((ActionEvent t) -> {
+            System.out.println("TC1: Take Face-up card\n");
+            System.out.println("Which card do you want?\n");
+            System.out.println("Choose 1-5");
+
+            Scanner scan = new Scanner(System.in);
+            int tcNo = scan.nextInt();
+            
+            TrainCard tcTemp = new TrainCard();
+            tcTemp = int2TCObject(tcNo);
+
+            TrainCard deck5TrainCardReplacement = new TrainCard();
+            deck5TrainCardReplacement = dispenseFaceUpTrainCard(tcTemp);        // **********************************    ******* METHOD FOR CONTROLLER !!!
+            player1TrainCard1 = deck5TrainCardReplacement;
+            vbox.setVisible(true);
+        });
+
+        // PLAYER CHOOSES TO DRAW A TRAIN CARD FROM THE DECK
+        MenuItem TC1_Choice2_FromDeck = new MenuItem("Draw from the deck");
+        TC1_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
+            System.out.println("TC1: Draw from the deck\n");
+            
+            // player1TrainCard2 = deal_1_CardFromDeck();                       // *********************************     ******* METHOD FOR CONTROLLER !!!
+
+            vbox.setVisible(true);
+        });
+        
+        menuDrawTrainCard1.getItems().add(TC1_Choice1_FaceUp);
+        menuDrawTrainCard1.getItems().add(TC1_Choice2_FromDeck);            
+        menuTrainCards.getItems().addAll(menuDrawTrainCard1);
+ 
+    // ****************************************************** DRAW TRAIN CARD 2
+    
+        // PLAYER SELECTS HIS SECOND TRAIN CARD (TRAIN CARD 2)
+        Menu menuDrawTrainCard2 = new Menu("Draw Train Card 2");
+        
+        // PLAYER CHOOSES TO TAKE FACE-UP TRAIN CARD       
+        MenuItem TC2_Choice1_FaceUp = new MenuItem("Take Face-up card");
+        TC2_Choice1_FaceUp.setOnAction((ActionEvent t) -> {
+            
+            System.out.println("TC2: Take Face-up card\n");
+            System.out.println("Which card do you want?\n");
+            System.out.println("Choose 1-5");
+
+            Scanner scan = new Scanner(System.in);
+            int tcNo = scan.nextInt();
+            
+            TrainCard tcTemp = new TrainCard();
+            tcTemp = int2TCObject(tcNo);
+
+            TrainCard deck5TrainCardReplacement = new TrainCard();
+            deck5TrainCardReplacement = dispenseFaceUpTrainCard(tcTemp);        // ***************************************** METHOD FOR CONTROLLER !!!
+            player1TrainCard1 = deck5TrainCardReplacement;
+            vbox.setVisible(true);
+        });
+        
+        // PLAYER CHOOSES TO DRAW A TRAIN CARD FROM THE DECK        
+        MenuItem TC2_Choice2_FromDeck = new MenuItem("Draw from the deck");
+        TC2_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
+           
+            System.out.println("TC1: Draw from the deck\n");
+            
+            // player1TrainCard2 = deal_1_CardFromDeck();                       // ***************************************** METHOD FOR CONTROLLER !!!
+
+            vbox.setVisible(true);
+        });
+        
+        menuDrawTrainCard2.getItems().add(TC2_Choice1_FaceUp);
+        menuDrawTrainCard2.getItems().add(TC2_Choice2_FromDeck);            
+        menuTrainCards.getItems().addAll(menuDrawTrainCard2);
+        
+    // ***************************************************** CLAIM-A-ROUTE MENU
+   
+        // Claim-A-Route Menu
+        Menu menuClaimARoute = new Menu("Claim-A-Route");
+        MenuItem ticket1 = new MenuItem("San Francisco - Los Angeles");
+       ticket1.setOnAction((ActionEvent t) -> {
+            System.out.println("You chose San Francisco - Los Angeles");
+            vbox.setVisible(true);
+        });          
+        MenuItem ticket2 = new MenuItem("San Francisco - Salt Lake City");
+        ticket2.setOnAction((ActionEvent t) -> {
+            System.out.println("You chose San Francisco - Salt Lake City");
+            vbox.setVisible(true);
+        });          
+        MenuItem ticket3 = new MenuItem("San Francisco - Portland");
+        ticket3.setOnAction((ActionEvent t) -> {
+            System.out.println("You chose San Francisco - Portland");
+            vbox.setVisible(true);
+        });                 
+        menuClaimARoute.getItems().addAll(ticket1, ticket2, ticket3);
+     
+    // ****************************************************** DRAW TICKETS MENU        
+
+        Menu menuDrawTickets = new Menu("Draw Tickets");
+        MenuItem draw3Tickets = new MenuItem("Draw 3 Destination Tickets");
+        draw3Tickets.setOnAction((ActionEvent t) -> {
+            System.out.println("You chose to draw 3 Destination Tickets");
+            vbox.setVisible(true);
+        });
+
+    // ***************************************************** RETURN TICKET MENU         
+      
+        MenuItem returnTicket = new MenuItem("Return Ticket");
+        returnTicket.setOnAction((ActionEvent t) -> {
+            System.out.println("You chose to return one destination Ticket");
+            vbox.setVisible(true);
+        }); 
+        menuDrawTickets.getItems().addAll(draw3Tickets, returnTicket);
+        
+        menuBar.getMenus().addAll(menuGame, menuTrainCards, menuClaimARoute,
+                                                            menuDrawTickets);        
+        ((VBox) scene.getRoot()).getChildren().addAll(menuBar, vbox);   
+
+    // ********************************************************* PLAYER2 BUTTON
+        
+        Button player2 = new Button("Player2");
+        player1.setPrefSize(100, 20);
+        
+        DropShadow shadow2 = new DropShadow();
+        player1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    player1.setEffect(shadow2); } });
+        
+        player1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Player1 Button has been clicked!"); } });         
+  
+        hbox.getChildren().addAll(player1, menuBar, player2);       
         return hbox;
     }
-
-    // Creates HBox to hold StackPane (for bottom region)
-    private HBox addHBoxBottom()
-    {
-        HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
-        hbox.setSpacing(10);   // Gap between nodes
-        hbox.setStyle("-fx-background-color: #336699;");
-
-        Button tbd = new Button("tbd");
-        tbd.setPrefSize(100, 20);
-        
-        hbox.getChildren().addAll(tbd);
-        
-        return hbox;
-    }
-
-    // Uses stack pane to create a help icon / adds to the right side of HBox
+  
+    // ****************************************************** ADD STACKPANE TOP
+    
+    // Uses stack pane to create the "T" Button / adds to the right side of HBox
     private void addStackPaneTop(HBox hb)
     {
         StackPane stack = new StackPane();
@@ -449,7 +405,66 @@ public class Ticket2RideView extends Application
         HBox.setHgrow(stack, Priority.ALWAYS);        
     }
 
-    // Uses stack pane to create a help icon / adds to the right side of HBox
+    // ************************************************************************** BEGIN LEFT BORDERPANE (FLOWPANE)
+    
+    // Creates Vertical Display of Train & Destination Cards
+    private FlowPane addFlowPaneLeft()  // for left side (Player1er 1)
+    {
+        FlowPane flow = new FlowPane();
+        flow.setPadding(new Insets(20, 0, 5, 0));
+        flow.setVgap(4);
+        flow.setHgap(4);
+        flow.setPrefWrapLength(85);
+        flow.setStyle("-fx-background-color: DAE6F3;");
+
+        // Array for 4 Train Cards for Player1er #1 (on left)
+        ImageView trainCards[] = new ImageView[4];
+        
+        trainCards[0] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            player1TrainCard1.getJPGImage())));
+        flow.getChildren().add(trainCards[0]);        
+
+        trainCards[1] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            player1TrainCard2.getJPGImage())));      
+        flow.getChildren().add(trainCards[1]);             
+            
+        trainCards[2] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            player1TrainCard3.getJPGImage())));       
+        flow.getChildren().add(trainCards[2]);              
+            
+        trainCards[3] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            player1TrainCard4.getJPGImage())));   
+        flow.getChildren().add(trainCards[3]);              
+        
+        // Array for 3 Destination Cards for Player1er #1 (on left)
+        ImageView destinationCards[] = new ImageView[3];
+        
+        destinationCards[0] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            "Ticket1_scale58.jpg")));        
+        flow.getChildren().add(destinationCards[0]);              
+            
+        destinationCards[1] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            "Ticket2_scale58.jpg")));        
+        flow.getChildren().add(destinationCards[1]);              
+            
+        destinationCards[2] = new ImageView(
+            new Image(Ticket2RideView.class.getResourceAsStream(
+            "Ticket3_scale58.jpg")));        
+        flow.getChildren().add(destinationCards[2]);              
+      
+        return flow;
+    }
+    
+    // ************************************************************************** BEGIN CENTER BORDERPANE
+    // ********************************************************** ADD STACKPANE
+    
+    // StackPane has 2 Children: Child 1 (Board Image), Child 2 (GridPane)
     private StackPane addStackPaneCenter()
     {
         StackPane stack = new StackPane();
@@ -469,16 +484,8 @@ public class Ticket2RideView extends Application
         return stack;
     }
 
-    private void addStackPaneBottom(HBox hb)
-    {
-        StackPane stack = new StackPane();
-
-        stack.setAlignment(Pos.CENTER_RIGHT);
- 
-        hb.getChildren().add(stack);
-        HBox.setHgrow(stack, Priority.ALWAYS);        
-    }
-
+    // *********************************************************** ADD GRIDPANE
+    
     private GridPane addGridPaneCenter(StackPane stack)         
     {
         GridPane grid = new GridPane();
@@ -499,10 +506,12 @@ public class Ticket2RideView extends Application
        
         //grid.setGridLinesVisible(true);
         return grid;
-    }    
-
+    }
+      
+    // ************************************************************************** BEGIN RIGHT BORDERPANE (FLOWPANE)
+    
     // Creates Vertical Display of Train & Destination Cards
-    private FlowPane addFlowPaneLeft()  // for left side (Player 1)
+    private FlowPane addFlowPaneRight()  // for right side (Player1er 2)
     {
         FlowPane flow = new FlowPane();
         flow.setPadding(new Insets(20, 0, 5, 0));
@@ -511,28 +520,23 @@ public class Ticket2RideView extends Application
         flow.setPrefWrapLength(85);
         flow.setStyle("-fx-background-color: DAE6F3;");
 
-        // Array for 4 Train Cards for Player #1 (on left)
-        ImageView trainCards[] = new ImageView[4];
-        
+        // Array for 4 Train Cards for Player1er #1 (on left)
+        ImageView trainCards[] = new ImageView[4];   
         trainCards[0] = new ImageView(
             new Image(Ticket2RideView.class.getResourceAsStream(
-            player1TrainCard1.getJPGImage()))); 
-            //"Box_scale79.jpg")));
+            player2TrainCard1.getJPGImage())));       
         flow.getChildren().add(trainCards[0]);        
-
         trainCards[1] = new ImageView(
             new Image(Ticket2RideView.class.getResourceAsStream(
-            "Passenger_scale79.jpg")));        
-        flow.getChildren().add(trainCards[1]);             
-            
+            player2TrainCard2.getJPGImage())));                           
+        flow.getChildren().add(trainCards[1]);                         
         trainCards[2] = new ImageView(
             new Image(Ticket2RideView.class.getResourceAsStream(
-            "Tanker_scale79.jpg")));        
-        flow.getChildren().add(trainCards[2]);              
-            
+            player2TrainCard3.getJPGImage())));       
+        flow.getChildren().add(trainCards[2]);                          
         trainCards[3] = new ImageView(
             new Image(Ticket2RideView.class.getResourceAsStream(
-            "Reefer_scale79.jpg")));        
+            player2TrainCard4.getJPGImage())));       
         flow.getChildren().add(trainCards[3]);              
         
         // Array for 3 Destination Cards for Player #1 (on left)
@@ -556,64 +560,38 @@ public class Ticket2RideView extends Application
         return flow;
     }
 
-    // Creates Vertical Display of Train & Destination Cards
-    private FlowPane addFlowPaneRight()  // for right side (Player 2)
+    // ************************************************************************** BEGIN BOTTOM BORDERPANE
+    
+    // CREATES HBOX TO HOLD STACKPANE (FOR BOTTOM REGION)
+    private HBox addHBoxBottom()
     {
-        FlowPane flow = new FlowPane();
-        flow.setPadding(new Insets(20, 0, 5, 0));
-        flow.setVgap(4);
-        flow.setHgap(4);
-        flow.setPrefWrapLength(85);
-        flow.setStyle("-fx-background-color: DAE6F3;");
+        HBox hbox = new HBox();
+        hbox.setPadding(new Insets(15, 12, 15, 12));
+        hbox.setSpacing(10);   // Gap between nodes
+        hbox.setStyle("-fx-background-color: #336699;");
 
-        // Array for 4 Train Cards for Player #1 (on left)
-        ImageView trainCards[] = new ImageView[4];
+        Button tbd = new Button("tbd");
+        tbd.setPrefSize(100, 20);
         
-        String pic = "Hopper_scale79.jpg";
+        hbox.getChildren().addAll(tbd);
         
-        
-        trainCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player2TrainCard1.getJPGImage())));       
-        flow.getChildren().add(trainCards[0]);        
+        return hbox;
+    }
 
-        trainCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            //player2TrainCard2.getJPGImage())));                    
-            "Hopper_scale79.jpg")));        
-        flow.getChildren().add(trainCards[1]);             
-            
-        trainCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Coal_scale79.jpg")));        
-        flow.getChildren().add(trainCards[2]);              
-            
-        trainCards[3] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Caboose_scale79.jpg")));        
-        flow.getChildren().add(trainCards[3]);              
-        
-        // Array for 3 Destination Cards for Player #1 (on left)
-        ImageView destinationCards[] = new ImageView[3];
-        
-        destinationCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket1_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[0]);              
-            
-        destinationCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket2_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[1]);              
-            
-        destinationCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket3_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[2]);              
-      
-        return flow;
-    }   
+    // ********************************************************** ADD STACKPANE
+    
+    private void addStackPaneBottom(HBox hb)
+    {
+        StackPane stack = new StackPane();
 
+        stack.setAlignment(Pos.CENTER_RIGHT);
+ 
+        hb.getChildren().add(stack);
+        HBox.setHgrow(stack, Priority.ALWAYS);        
+    }
+
+    // *********************************************************** ADD FLOWPANE
+    
     // FlowPane is displaying the Train & Destination Cards
     private FlowPane addFlowPaneBottom()    // for bottom strip
     {
@@ -627,27 +605,27 @@ public class Ticket2RideView extends Application
         ImageView pages[] = new ImageView[6];
             pages[0] = new ImageView(
                 new Image(Ticket2RideView.class.getResourceAsStream(
-                "Box_scale79_vert.jpg")));        
+                "Box_scale79_vert.jpg")));           
             flow.getChildren().add(pages[0]);
             
             pages[1] = new ImageView(
                 new Image(Ticket2RideView.class.getResourceAsStream(
-                "Freight_scale79_vert.jpg")));        
+                "Passenger_scale79_vert.jpg")));                               
             flow.getChildren().add(pages[1]);           
             
              pages[2] = new ImageView(
                 new Image(Ticket2RideView.class.getResourceAsStream(
-                "Tanker_scale79_vert.jpg")));        
+                "Reefer_scale79_vert.jpg")));              
             flow.getChildren().add(pages[2]);
             
              pages[3] = new ImageView(
                 new Image(Ticket2RideView.class.getResourceAsStream(
-                "Hopper_scale79_vert.jpg")));        
+                "Hopper_scale79_vert.jpg")));       
             flow.getChildren().add(pages[3]);
             
             pages[4] = new ImageView(
                 new Image(Ticket2RideView.class.getResourceAsStream(
-                "Caboose_scale79_vert.jpg")));        
+                "Caboose_scale79_vert.jpg")));      
             flow.getChildren().add(pages[4]);
             
             pages[5] = new ImageView(
@@ -657,4 +635,75 @@ public class Ticket2RideView extends Application
 
         return flow;
     }
+    
+    // ************************************************************************** FUNCTION: int2TCObject()
+    
+        public TrainCard int2TCObject(int tcNo)
+        {
+            TrainCard tcTemp = new TrainCard();
+                
+            if(tcNo == 1)
+                tcTemp = deck5TrainCard1;
+            if(tcNo == 2)
+                tcTemp = deck5TrainCard2;           
+            if(tcNo == 3)
+                tcTemp = deck5TrainCard3;            
+            if(tcNo == 4)
+                tcTemp = deck5TrainCard4;           
+            if(tcNo == 5)
+                tcTemp = deck5TrainCard5;
+            if(tcNo == 6)
+                tcTemp = player1TrainCard1;           
+            if(tcNo == 7)
+                tcTemp = player1TrainCard2;            
+            if(tcNo == 8)
+                tcTemp = player2TrainCard1;           
+            if(tcNo == 9)
+                tcTemp = player2TrainCard2;           
+   
+            return tcTemp;
+        }
+
+    // ************************************************************************** INTEGRATION TEST DRIVERS
+        // DRIVERS TO TEST INTERFACE BETWEEN VIEW (GUI) AND CONTROLLER
+        
+     public void setPlayer1Name(String p1)
+     {
+         Player1 = p1;  // This is "The Controller/Model's Player1
+     }
+        
+     public void setPlayer2Name(String p2)
+     {
+         Player2 = p2;  // This is "The Controller/Model's Player2
+     }       
+
+    public TrainCard dispenseFaceUpTrainCard(TrainCard tcTemp)
+    {   /*  
+            THIS IS A TEMPORARY TEST DRIVER
+        This function should go into the Controller.
+    
+        Input: "tcTemp" ... a TrainCard that the GUI wants to remove from board
+        This card should be added to the Player1er's hand.
+    
+        Output: The Controller should return a new TrainCard from the Deck
+        (So that the GUI can replace the card that was removed from Board)
+        */
+
+        return deck5TrainCard5;         // Bogus: just a test experiment
+    }
+
+    public TrainCard deal_1_CardFromDeck()
+    {   /*
+            THIS IS A TEMPORARY TEST DRIVER
+        This function should go into the Controller.
+    
+        Input: no input parameters
+    
+        Output: The Controller should return a new TrainCard from the Deck
+        This card should also be added to the Player1er's hand.
+        */        
+
+        return deck5TrainCard5;         // Bogus: just a test experiment
+    }       
 }
+    // THE END ******************************************************************

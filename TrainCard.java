@@ -1,8 +1,8 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Wed 24 Oct 2018 @ 11:59 PM
-    HW_4
+    Due: Fri 9 Nov 2018 @ 11:59 PM
+    HW_5
 */
 
 package ticket2rideview;
@@ -14,21 +14,19 @@ public class TrainCard
    
    // Default Constructor
    TrainCard()
-   {    trainCarType = "FREIGHT";
-        jpgImage = "Freight_scale79.jpg";
+   {    trainCarType = "CABOOSE";
+        jpgImage = "Caboose_scale79.jpg";
    }
    
    // Constructor
    TrainCard(String type)
    {    trainCarType = type;
-        System.out.println("I AM HERE");
-       // jpg image: (class/syntax?)
+        jpgImage = lookUpJPGImage4TrainCarType(type);
    }   
    
-   // Setter
-    public void setTrainCarType(String trainType)
-    {   trainCarType = trainType;
-    
+   // Mutator Function
+    public String lookUpJPGImage4TrainCarType(String trainType)
+    {
         if (trainCarType == "LOCOMOTIVE")
             jpgImage = "Locomotive_scale79.jpg";
         else if (trainCarType == "FREIGHT")
@@ -47,9 +45,16 @@ public class TrainCard
             jpgImage = "Tanker_scale79.jpg";    
         else if (trainCarType == "REEFER")
             jpgImage = "Reefer_scale79.jpg";
+        
+        return jpgImage;
     }
-    
-    // Getter
+
+    // Getters   
+    public String getTrainType()
+    {
+        return trainCarType;
+    }
+
     public String getJPGImage()
     {
         return jpgImage;
