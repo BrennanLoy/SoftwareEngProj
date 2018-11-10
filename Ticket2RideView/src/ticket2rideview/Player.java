@@ -6,11 +6,13 @@ import java.util.Scanner;
 
 /**
  *
- * Yax Barillas
+ * Brennan
  */
 public class Player {
     
     public String pName;
+    Deck D;
+    DestinationDeck O;
     
     ArrayList<TrainCard> THand = new ArrayList<>();
     ArrayList<Ticket> DHand = new ArrayList<>();
@@ -21,10 +23,11 @@ public class Player {
     Player(String name){
         this.pName = name;
         for(int i = 0; i < 4; i++){
+            THand.add(D.draw());
         }
+        O.dtDraw();
     }
     
-
     public String getpName(){
         return pName;
     }
