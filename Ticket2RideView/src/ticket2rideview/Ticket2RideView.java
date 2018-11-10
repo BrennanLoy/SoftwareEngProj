@@ -68,13 +68,13 @@ public class Ticket2RideView extends Application
     TrainCard player2TrainCard4 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
 
     // Initial Ticket Values: Preset for show / Reset when game starts
-    Ticket player1Ticket1 = new Ticket();
-    Ticket player1Ticket2 = new Ticket();
-    Ticket player1Ticket3 = new Ticket();
+    Ticket player1Ticket1 = Player1.DHand.get(1);
+    Ticket player1Ticket2 = Player1.DHand.get(2);
+    Ticket player1Ticket3 = Player1.DHand.get(3);
 
-    Ticket player2Ticket1 = new Ticket();
-    Ticket player2Ticket2 = new Ticket();
-    Ticket player2Ticket3 = new Ticket();
+    Ticket player2Ticket1 = Player2.DHand.get(1);
+    Ticket player2Ticket2 = Player2.DHand.get(2);
+    Ticket player2Ticket3 = Player2.DHand.get(3);
 
     // Markers are at start position (Initially)
     Markers player1Marker = new Markers(1, 0);
@@ -101,7 +101,6 @@ public class Ticket2RideView extends Application
     {  
         // BorderPane is the scene root
         BorderPane root = new BorderPane();
-        
         HBox hbox = addHBoxTop();
         root.setTop(hbox);
         addStackPaneTop(hbox);         
