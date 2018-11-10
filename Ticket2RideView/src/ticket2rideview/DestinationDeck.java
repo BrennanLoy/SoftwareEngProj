@@ -11,6 +11,7 @@ public class DestinationDeck {
     ArrayList<Ticket> ticDeck;
     public int dtCount = 0;
     public int tLeft = 5;
+    Player p;
 
     public DestinationDeck() {
         this.ticDeck = new ArrayList<>();
@@ -22,9 +23,15 @@ public class DestinationDeck {
         ticDeck.add(new Ticket("Portland to San Francisco"));
     }
     
-    public Ticket dtDraw(){
-        while(dtCount<5)
-             return ticDeck.get(dtCount);
-        return new Ticket();
+    public void dtDraw(){
+        while(dtCount != 3){
+            Random rand = new Random();
+            int x = rand.nextInt(5);
+            
+            p.DHand.add(ticDeck.get(x));
+            ticDeck.remove(x);
+            tLeft--;
+            dtCount++;
+        }
     }
 }
