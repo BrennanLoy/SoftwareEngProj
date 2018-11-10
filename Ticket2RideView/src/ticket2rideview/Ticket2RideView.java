@@ -57,15 +57,15 @@ public class Ticket2RideView extends Application
     
     // Initial Train Card Values: Preset for show / Reset when game starts
 
-    TrainCard player1TrainCard1 = new TrainCard("BOX");  
-    TrainCard player1TrainCard2 = new TrainCard("PASSENGER"); 
-    TrainCard player1TrainCard3 = new TrainCard("TANKER");
-    TrainCard player1TrainCard4 = new TrainCard("REEFER");
+    TrainCard player1TrainCard1 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());  
+    TrainCard player1TrainCard2 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
+    TrainCard player1TrainCard3 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
+    TrainCard player1TrainCard4 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
 
-    TrainCard player2TrainCard1 = new TrainCard("FREIGHT"); 
-    TrainCard player2TrainCard2 = new TrainCard("HOPPER");  
-    TrainCard player2TrainCard3 = new TrainCard("COAL");
-    TrainCard player2TrainCard4 = new TrainCard("CABOOSE");
+    TrainCard player2TrainCard1 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
+    TrainCard player2TrainCard2 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
+    TrainCard player2TrainCard3 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
+    TrainCard player2TrainCard4 = TrainCard.lookUpJPGImage4TrainCarType(G.D.draw());
 
     // Initial Ticket Values: Preset for show / Reset when game starts
     Ticket player1Ticket1 = new Ticket();
@@ -291,7 +291,7 @@ public class Ticket2RideView extends Application
            
             System.out.println("TC1: Draw from the deck\n");
             
-            // player1TrainCard2 = deal_1_CardFromDeck();                       // ***************************************** METHOD FOR CONTROLLER !!!
+            // player1TrainCard2 = deal_1_CardFromDeck(); g.P1.THand.add(g.d.draw)                      // ***************************************** METHOD FOR CONTROLLER !!!
 
             vbox.setVisible(true);
         });
