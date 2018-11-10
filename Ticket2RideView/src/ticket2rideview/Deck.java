@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author Fronz
+ * @author Brennan Loy
  */
 public class Deck {
     public int purpleNum,whiteNum,blueNum,yellowNum,orangeNum,blackNum,redNum,greenNum = 12;
@@ -27,63 +27,63 @@ public class Deck {
                 else{
                     purpleNum--;
                     totalC--;
-                    return new TrainCard("Purple");}
+                    return new TrainCard("BOX");}
             case 1:
                 if(this.whiteNum == 0)
                    draw();
                 else{
                     whiteNum--;
                     totalC--;
-                    return new TrainCard("White");}
+                    return new TrainCard("PASSENGER");}
             case 2:
                 if(this.blueNum == 0)
                     draw();
                 else{
                     blueNum--;
                     totalC--;
-                    return new TrainCard("Blue");}
+                    return new TrainCard("TANKER");}
             case 3:
                 if(this.yellowNum == 0)
                     draw();
                 else{
                     yellowNum--;
                     totalC--;
-                    return new TrainCard("Yellow");}
+                    return new TrainCard("REEFER");}
             case 4:
                 if(this.orangeNum == 0)
                     draw();
                 else{
                     orangeNum--;
                     totalC--;
-                    return new TrainCard("Orange");}
+                    return new TrainCard("FREIGHT");}
             case 5:
                 if(this.blackNum == 0)
                    draw();
                 else{
                     blackNum--;
                     totalC--;
-                    return new TrainCard("Black");}
+                    return new TrainCard("HOPPER");}
             case 6:
                 if(this.redNum == 0)
                    draw();
                 else{
                     redNum--;
                     totalC--;
-                    return new TrainCard("Red");}
+                    return new TrainCard("COAL");}
             case 7:
                 if(this.greenNum == 0)
                     draw();
                 else{
                     greenNum--;
                     totalC--;
-                    return new TrainCard("Green");}
+                    return new TrainCard("CABOOSE");}
             case 8: 
                 if(this.locoNum == 0)
                     draw();
                 else{
                     locoNum--;
                     totalC--;
-                    return new TrainCard("Loco");}
+                    return new TrainCard("LOCOMOTIVE");}
 	}
         return new TrainCard("Blank");
     }
