@@ -1,12 +1,13 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Fri 9 Nov 2018 @ 11:59 PM
-    HW_5
+    Due: Fri 7 Dec 2018 @ 11:59 PM
+    HW_6
 */
 
 package ticket2rideview;
 
+import java.util.Random;
 import java.util.Scanner;
 import static javafx.application.Application.launch;
 import javafx.event.EventHandler;
@@ -19,12 +20,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -45,7 +40,7 @@ public class Ticket2RideView extends Application
     // THIS CODE WILL MOVE INTO "ABOUT" SUBMENU .... LATER!
     final Label name = new Label("\nTicket-To-Ride Game");   
     final ImageView pic = new ImageView(
-        new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));   
+        new Image(Ticket2RideView.class.getResourceAsStream("graphics/pic38674.jpg")));   
     final Label introduction = new Label("                    Alan R. Moon's \n" +
                                           "              Ticket-To-Ride Game \n" +
                                         "The Cross-Country Train Adventure Game");
@@ -53,7 +48,43 @@ public class Ticket2RideView extends Application
     // ************************************************************************** INITIALIZE BOARD ELEMENTS
     
     String Player1, Player2;
+    int currentPlayer = 1;
+    Integer integerScore1 = 0000;
+    Integer integerScore2 = 0000;
+    String stringScore = "";
     
+    // Initialize left_TC Buttons
+    Button left_TC_1 = new Button();
+    Button left_TC_2 = new Button();   
+    Button left_TC_3 = new Button();    
+    Button left_TC_4 = new Button();
+    
+    // Initialize left_DT Buttons
+    Button left_DT_1 = new Button();
+    Button left_DT_2 = new Button();   
+    Button left_DT_3 = new Button();
+    
+    // Initialize right_TC Buttons
+    Button right_TC_1 = new Button();
+    Button right_TC_2 = new Button();   
+    Button right_TC_3 = new Button();    
+    Button right_TC_4 = new Button();
+    
+    // Initialize right_DT Buttons
+    Button right_DT_1 = new Button();
+    Button right_DT_2 = new Button();   
+    Button right_DT_3 = new Button();
+    
+    // Initialize bottom_TC Buttons
+    Button bottom_TC_1 = new Button();
+    Button bottom_TC_2 = new Button();   
+    Button bottom_TC_3 = new Button();    
+    Button bottom_TC_4 = new Button();    
+    Button bottom_TC_5 = new Button();
+
+    // Initialize bottom_LP_Bonus Button
+    Button bottom_LP_Bonus = new Button();   
+
     // Initial Train Card Values: Preset for show / Reset when game starts
     TrainCard player1TrainCard1 = new TrainCard("BOX");  
     TrainCard player1TrainCard2 = new TrainCard("PASSENGER"); 
@@ -101,8 +132,7 @@ public class Ticket2RideView extends Application
         BorderPane root = new BorderPane();
         
         HBox hbox = addHBoxTop();
-        root.setTop(hbox);
-        addStackPaneTop(hbox);         
+        root.setTop(hbox);       
        
         root.setLeft(addFlowPaneLeft());  
         
@@ -118,26 +148,49 @@ public class Ticket2RideView extends Application
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Ticket2RideView");
-        stage.show();
+        stage.show();     
     }
 
     // ************************************************************************** BEGIN TOP BORDERPANE 
     
         // CREATES HBOX FOR TOP PANE:
-        // INCLUDES: Player1 Button - Main Menu - Player2 Button - T Button
+        // INCLUDES: Player1-Score1-TrainCards1 Buttons + Main Menu + Player2-Score2-TrainCards2 Buttons
     private HBox addHBoxTop() {
 
         HBox hbox = new HBox();
-        hbox.setPadding(new Insets(15, 12, 15, 12));
-        hbox.setSpacing(10);   // Gap between nodes
+        hbox.setPadding(new Insets(15, 7, 15, 7));
+        hbox.setSpacing(30);   // Gap between nodes
         hbox.setStyle("-fx-background-color: #336699;");
+        
+        String player1Score = "0000";
+        String player2Score = "0000";
+        int player1IntScore = 0000;
 
-    // ********************************************************* PLAYER1 BUTTON      
+    // ************************************************************************** GUIDE BUTTON
+
+        //String player1Guide = "GUIDE";
+        Button guide = new Button("GUIDE");
+        guide.setText("Enter your name to begin!");
+        guide.setPrefSize(178, 20);
+
+        DropShadow shadow = new DropShadow();
+        guide.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    guide.setEffect(shadow); } });
+        
+        guide.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Guide Button has been clicked!"); } });       
+        
+         
+    // ************************************************************************** PLAYER1 BUTTON      
 
         Button player1 = new Button("Player1");
-        player1.setPrefSize(100, 20);
         
-        DropShadow shadow = new DropShadow();
+        player1.setPrefSize(90, 20);
+
         player1.addEventHandler(MouseEvent.MOUSE_ENTERED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
@@ -146,11 +199,120 @@ public class Ticket2RideView extends Application
         player1.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    System.out.println("Player1 Button has been clicked!"); } });       
-  
-    // ****************************************************** MAIN MENUBAR VBOX
+                    guide.setText("I Love Jesus");
+                    currentPlayer = 1;
+                    System.out.println("Player1 Button has been clicked!"); } });
+
+    // ************************************************************************** PLAYER2 BUTTON
+        
+        Button player2 = new Button("Player2");
+        player2.setPrefSize(90, 20);
+
+        player2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    player2.setEffect(shadow); } });
+        
+        player2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    guide.setText("I bet you love Jesus too! yes? ");
+                    currentPlayer = 2;
+                    System.out.println("Player2 Button has been clicked!"); } });
+
+    // ************************************************************************** SCORE1 BUTTON
+        
+        //player1Score = Integer.toString(player1IntScore);
+        Button score1 = new Button(player1Score);
+        score1.setPrefSize(50, 20);
+
+        score1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    score1.setEffect(shadow); } });
+        
+        score1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Score 1 Button has been clicked!"); } });
+
+    // ************************************************************************** SCORE2 BUTTON
+
+        Button score2 = new Button(player2Score);
+        score2.setPrefSize(50, 20);
+
+        score2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    score2.setEffect(shadow); } });
+        
+        score2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Score2 Button has been clicked!"); } });       
+
+    // ************************************************************************** TRAINCARDS1 BUTTON
+        
+        Button trainCards1 = new Button("Train Cards");
+        trainCards1.setPrefSize(76, 20);
+
+        trainCards1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    trainCards1.setEffect(shadow); } });
+        
+        trainCards1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("TrainCards1 Button has been clicked!"); } });
     
-        // Note: not needed anymore? .... deal with it later
+    // ************************************************************************** TRAINCARDS2 BUTTON
+
+        Button trainCards2 = new Button("Train Cards");
+        trainCards2.setPrefSize(76, 20);
+        
+        trainCards2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    trainCards2.setEffect(shadow); } });
+        
+        trainCards2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("TrainCards2 Button has been clicked!"); } });           
+
+    // ************************************************************************** Tickets1 BUTTON
+        
+        Button tickets1 = new Button("Tickets");
+        tickets1.setPrefSize(53, 20);
+
+        tickets1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    tickets1.setEffect(shadow); } });
+        
+        tickets1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Tickets 1 Button has been clicked!"); } });
+        
+    // ************************************************************************** Tickets2 BUTTON
+        
+        Button tickets2 = new Button("Tickets");
+        tickets2.setPrefSize(53, 20);
+
+        tickets2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    tickets2.setEffect(shadow); } });
+        
+        tickets2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Tickets 2 Button has been clicked!"); } });       
+
+    // ************************************************************************** MAIN MENUBAR VBOX
+        
         Scene scene = new Scene(new VBox(), 400, 350);
         scene.setFill(Color.OLDLACE);
 
@@ -165,23 +327,25 @@ public class Ticket2RideView extends Application
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);        
         vbox.setPadding(new Insets(0, 10, 0, 10));
-        vbox.getChildren().addAll(name, pic, introduction);
-        
+
     // *********************************************************** GAME SUBMENU
 
-        Menu menuGame = new Menu("Game");
-        
-        Menu menuSetPlayer = new Menu("Set Player");
+        Menu menuGame = new Menu("Game");       
+        Menu menuSetPlayer = new Menu("Set Players");
         
     // ******************************************************* SET PLAYER1 NAME
     
         MenuItem setNamePlayer1 = new MenuItem("Player 1 Name");
-        setNamePlayer1.setOnAction((ActionEvent t) -> {  
-            System.out.println("Enter name for Player 1: ");   
+        setNamePlayer1.setOnAction((ActionEvent t) -> {
+            //guide.setText("Enter name for Player 1: ");
+            
+            System.out.println("Enter name for Player 1: ");
             Scanner scan = new Scanner(System.in);
-            String p1 = scan.next();
-            setPlayer1Name(p1);        // ************************************************************************************** METHOD FOR CONTROLLER !!!
-            Player1 = p1;   // for my local Player1 String
+            String player1Name = scan.next();
+            setPlayerName(1, player1Name);                                      // ******* GUI IS SENDING PLAYER 1'S NAME TO CONTROLLER/MODEL ******* METHOD FOR CONTROLLER !!!
+            player1.setText(player1Name);
+            Player1 = player1Name;   // for my local Player1 String
+            guide.setText("Hello " + player1Name + "!");
             vbox.setVisible(true);
         });
         
@@ -191,15 +355,81 @@ public class Ticket2RideView extends Application
         setNamePlayer2.setOnAction((ActionEvent t) -> {  
             System.out.println("Enter name for Player 2: ");
             Scanner scan = new Scanner(System.in);
-            String p2 = scan.next();
-            setPlayer1Name(p2);        // ************************************************************************************** METHOD FOR CONTROLLER !!!           
+            String player2Name = scan.next();
+            setPlayerName(2, player2Name);                                      // ******* GUI IS SENDING PLAYER 2'S NAME TO CONTROLLER/MODEL ******* METHOD FOR CONTROLLER !!!
+            player2.setText(player2Name);
+            Player2 = player2Name;   // for my local Player2 String
+            guide.setText("Hello " + player2Name + "!");            
             vbox.setVisible(true);
         });
 
         menuSetPlayer.getItems().add(setNamePlayer1);
         menuSetPlayer.getItems().add(setNamePlayer2);            
         menuGame.getItems().addAll(menuSetPlayer);         
-    
+
+    // ************************************************************* START GAME
+   
+        MenuItem startGame = new MenuItem("Start Game");
+        startGame.setOnAction((ActionEvent t) -> {  
+            System.out.println("THE GAME PLAY BEGINS) ");
+            
+        TrainCard tempTrainCard = deal_1_CardFromDeck();                        // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_a = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        left_TC_1.setGraphic(new ImageView(imageDecline_a));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_b = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        left_TC_2.setGraphic(new ImageView(imageDecline_b));            
+            
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_c = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        left_TC_3.setGraphic(new ImageView(imageDecline_c));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_d = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        left_TC_4.setGraphic(new ImageView(imageDecline_d));            
+        
+        // *******
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_e = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        right_TC_1.setGraphic(new ImageView(imageDecline_e));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_f = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        right_TC_2.setGraphic(new ImageView(imageDecline_f));            
+            
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_g = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        right_TC_3.setGraphic(new ImageView(imageDecline_g));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_h = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        right_TC_4.setGraphic(new ImageView(imageDecline_h));               
+
+        // *******
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_i = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        bottom_TC_1.setGraphic(new ImageView(imageDecline_i));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_j = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        bottom_TC_2.setGraphic(new ImageView(imageDecline_j));            
+            
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_k = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        bottom_TC_3.setGraphic(new ImageView(imageDecline_k));           
+        
+        tempTrainCard = deal_1_CardFromDeck();                                  // ******************************************** METHOD FOR CONTROLLER !!!
+        Image imageDecline_l = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        bottom_TC_4.setGraphic(new ImageView(imageDecline_l));               
+
+        guide.setText("It is Player 1's turn.");
+        
+            vbox.setVisible(true);
+        });
+
     // ************************************************************* GAME RULES
     
             // THIS IS FOR FUTURE DEVELOPMENT
@@ -218,13 +448,13 @@ public class Ticket2RideView extends Application
             vbox.setVisible(false);
         });
 
-    // ****************************************************************** QUIT
+    // ******************************************************************* QUIT
         MenuItem exit = new MenuItem("Quit");
         exit.setOnAction((ActionEvent t) -> {
             System.exit(0);
         });
 
-        menuGame.getItems().addAll(menuSetPlayer, showGameRules, clear,
+        menuGame.getItems().addAll(menuSetPlayer, startGame, showGameRules, clear,
                                             new SeparatorMenuItem(), exit);
 
     // ************************************************** DRAW TRAIN CARDS MENU
@@ -240,6 +470,9 @@ public class Ticket2RideView extends Application
         // PLAYER CHOOSES TO TAKE FACE-UP TRAIN CARD
         MenuItem TC1_Choice1_FaceUp = new MenuItem("Take Face-up card");
         TC1_Choice1_FaceUp.setOnAction((ActionEvent t) -> {
+            
+            // guide.setText("Which card?");
+            
             System.out.println("TC1: Take Face-up card\n");
             System.out.println("Which card do you want?\n");
             System.out.println("Choose 1-5");
@@ -247,12 +480,33 @@ public class Ticket2RideView extends Application
             Scanner scan = new Scanner(System.in);
             int tcNo = scan.nextInt();
             
-            TrainCard tcTemp = new TrainCard();
-            tcTemp = int2TCObject(tcNo);
+            TrainCard faceUp5TrainCardChoice = new TrainCard();
+            faceUp5TrainCardChoice = int2TCObject(tcNo);
+            
+            if(currentPlayer == 1)  {
+                Image imageDecline_A = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
+                left_TC_1.setGraphic(new ImageView(imageDecline_A));    }
+            
+            else if(currentPlayer == 2) {
+                Image imageDecline_B = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
+                right_TC_1.setGraphic(new ImageView(imageDecline_B));    }               
 
-            TrainCard deck5TrainCardReplacement = new TrainCard();
-            deck5TrainCardReplacement = dispenseFaceUpTrainCard(tcTemp);        // **********************************    ******* METHOD FOR CONTROLLER !!!
-            player1TrainCard1 = deck5TrainCardReplacement;
+            TrainCard faceUp5TrainCardReplacement = new TrainCard();
+            faceUp5TrainCardReplacement = dispenseFaceUp5TrainCard(faceUp5TrainCardChoice); // ******************************** METHOD FOR CONTROLLER !!!           
+
+            Image imageDecline_C = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
+            
+            if(tcNo == 1)
+                bottom_TC_1.setGraphic(new ImageView(imageDecline_C)); 
+            if(tcNo == 2)
+                bottom_TC_2.setGraphic(new ImageView(imageDecline_C));           
+            if(tcNo == 3)
+                bottom_TC_3.setGraphic(new ImageView(imageDecline_C));            
+            if(tcNo == 4)
+                bottom_TC_4.setGraphic(new ImageView(imageDecline_C));            
+            if(tcNo == 5)
+                bottom_TC_5.setGraphic(new ImageView(imageDecline_C));            
+
             vbox.setVisible(true);
         });
 
@@ -260,8 +514,16 @@ public class Ticket2RideView extends Application
         MenuItem TC1_Choice2_FromDeck = new MenuItem("Draw from the deck");
         TC1_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
             System.out.println("TC1: Draw from the deck\n");
+
+        TrainCard newTrainCard1 = deal_1_CardFromDeck();                       // ******************************************** METHOD FOR CONTROLLER !!!
+
+            if(currentPlayer == 1)  {
+                Image imageDecline_D = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
+                left_TC_1.setGraphic(new ImageView(imageDecline_D));    }
             
-            // player1TrainCard2 = deal_1_CardFromDeck();                       // *********************************     ******* METHOD FOR CONTROLLER !!!
+            else if(currentPlayer == 2) {
+                Image imageDecline_E = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
+                right_TC_1.setGraphic(new ImageView(imageDecline_E));    }             
 
             vbox.setVisible(true);
         });
@@ -269,16 +531,15 @@ public class Ticket2RideView extends Application
         menuDrawTrainCard1.getItems().add(TC1_Choice1_FaceUp);
         menuDrawTrainCard1.getItems().add(TC1_Choice2_FromDeck);            
         menuTrainCards.getItems().addAll(menuDrawTrainCard1);
- 
+
     // ****************************************************** DRAW TRAIN CARD 2
     
         // PLAYER SELECTS HIS SECOND TRAIN CARD (TRAIN CARD 2)
         Menu menuDrawTrainCard2 = new Menu("Draw Train Card 2");
         
-        // PLAYER CHOOSES TO TAKE FACE-UP TRAIN CARD       
+        // PLAYER CHOOSES TO TAKE FACE-UP TRAIN CARD
         MenuItem TC2_Choice1_FaceUp = new MenuItem("Take Face-up card");
         TC2_Choice1_FaceUp.setOnAction((ActionEvent t) -> {
-            
             System.out.println("TC2: Take Face-up card\n");
             System.out.println("Which card do you want?\n");
             System.out.println("Choose 1-5");
@@ -286,49 +547,108 @@ public class Ticket2RideView extends Application
             Scanner scan = new Scanner(System.in);
             int tcNo = scan.nextInt();
             
-            TrainCard tcTemp = new TrainCard();
-            tcTemp = int2TCObject(tcNo);
+            TrainCard faceUp5TrainCardChoice = new TrainCard();
+            faceUp5TrainCardChoice = int2TCObject(tcNo);
+            
+            if(currentPlayer == 1)  {
+                Image imageDecline_F = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
+                left_TC_2.setGraphic(new ImageView(imageDecline_F));    }
+            
+            else if(currentPlayer == 2) {
+                Image imageDecline_G = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
+                right_TC_2.setGraphic(new ImageView(imageDecline_G));    }               
 
-            TrainCard deck5TrainCardReplacement = new TrainCard();
-            deck5TrainCardReplacement = dispenseFaceUpTrainCard(tcTemp);        // ***************************************** METHOD FOR CONTROLLER !!!
-            player1TrainCard1 = deck5TrainCardReplacement;
+            TrainCard faceUp5TrainCardReplacement = new TrainCard();
+            faceUp5TrainCardReplacement = dispenseFaceUp5TrainCard(faceUp5TrainCardChoice); // ******************************** METHOD FOR CONTROLLER !!!           
+
+            Image imageDecline_H = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
+            
+            if(tcNo == 1)
+                bottom_TC_1.setGraphic(new ImageView(imageDecline_H)); 
+            if(tcNo == 2)
+                bottom_TC_2.setGraphic(new ImageView(imageDecline_H));           
+            if(tcNo == 3)
+                bottom_TC_3.setGraphic(new ImageView(imageDecline_H));            
+            if(tcNo == 4)
+                bottom_TC_4.setGraphic(new ImageView(imageDecline_H));            
+            if(tcNo == 5)
+                bottom_TC_5.setGraphic(new ImageView(imageDecline_H));            
+
             vbox.setVisible(true);
         });
-        
-        // PLAYER CHOOSES TO DRAW A TRAIN CARD FROM THE DECK        
+
+        // PLAYER CHOOSES TO DRAW A TRAIN CARD FROM THE DECK
         MenuItem TC2_Choice2_FromDeck = new MenuItem("Draw from the deck");
         TC2_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
-           
-            System.out.println("TC1: Draw from the deck\n");
+            System.out.println("TC2: Draw from the deck\n");
+
+        TrainCard newTrainCard1 = deal_1_CardFromDeck();                        // ******************************************** METHOD FOR CONTROLLER !!!
+
+            if(currentPlayer == 1)  {
+                Image imageDecline_I = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
+                left_TC_2.setGraphic(new ImageView(imageDecline_I));    }
             
-            // player1TrainCard2 = deal_1_CardFromDeck();                       // ***************************************** METHOD FOR CONTROLLER !!!
+            else if(currentPlayer == 2) {
+                Image imageDecline_J = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
+                right_TC_2.setGraphic(new ImageView(imageDecline_J));    }             
 
             vbox.setVisible(true);
         });
         
         menuDrawTrainCard2.getItems().add(TC2_Choice1_FaceUp);
         menuDrawTrainCard2.getItems().add(TC2_Choice2_FromDeck);            
-        menuTrainCards.getItems().addAll(menuDrawTrainCard2);
-        
+        menuTrainCards.getItems().addAll(menuDrawTrainCard2);       
+
     // ***************************************************** CLAIM-A-ROUTE MENU
    
         // Claim-A-Route Menu
         Menu menuClaimARoute = new Menu("Claim-A-Route");
+        
         MenuItem ticket1 = new MenuItem("San Francisco - Los Angeles");
        ticket1.setOnAction((ActionEvent t) -> {
             System.out.println("You chose San Francisco - Los Angeles");
+            
+            if(currentPlayer == 1)
+            {   stringScore = increaseScore(1, 5);
+                score1.setText(stringScore); }
+            
+            else if(currentPlayer == 2)
+            {   stringScore = increaseScore(2, 5);
+                score2.setText(stringScore); }
+            
             vbox.setVisible(true);
-        });          
+        });
+       
         MenuItem ticket2 = new MenuItem("San Francisco - Salt Lake City");
         ticket2.setOnAction((ActionEvent t) -> {
             System.out.println("You chose San Francisco - Salt Lake City");
+           
+            if(currentPlayer == 1)
+            {   stringScore = increaseScore(1, 10);
+                score1.setText(stringScore); }
+            
+            else if(currentPlayer == 2)
+            {   stringScore = increaseScore(2, 10);
+                score2.setText(stringScore); }
+
             vbox.setVisible(true);
-        });          
+        });
+        
         MenuItem ticket3 = new MenuItem("San Francisco - Portland");
         ticket3.setOnAction((ActionEvent t) -> {
             System.out.println("You chose San Francisco - Portland");
+            
+            if(currentPlayer == 1)
+            {   stringScore = increaseScore(1, 25);
+                score1.setText(stringScore); }
+            
+            else if(currentPlayer == 2)
+            {   stringScore = increaseScore(2, 25);
+                score2.setText(stringScore); }            
+
             vbox.setVisible(true);
-        });                 
+        });
+        
         menuClaimARoute.getItems().addAll(ticket1, ticket2, ticket3);
      
     // ****************************************************** DRAW TICKETS MENU        
@@ -351,59 +671,11 @@ public class Ticket2RideView extends Application
         
         menuBar.getMenus().addAll(menuGame, menuTrainCards, menuClaimARoute,
                                                             menuDrawTickets);        
-        ((VBox) scene.getRoot()).getChildren().addAll(menuBar, vbox);   
-
-    // ********************************************************* PLAYER2 BUTTON
+        ((VBox) scene.getRoot()).getChildren().addAll(menuBar, vbox);
         
-        Button player2 = new Button("Player2");
-        player1.setPrefSize(100, 20);
-        
-        DropShadow shadow2 = new DropShadow();
-        player1.addEventHandler(MouseEvent.MOUSE_ENTERED,
-            new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent e) {
-                    player1.setEffect(shadow2); } });
-        
-        player1.addEventHandler(MouseEvent.MOUSE_CLICKED,
-            new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent e) {
-                    System.out.println("Player1 Button has been clicked!"); } });         
-  
-        hbox.getChildren().addAll(player1, menuBar, player2);       
+        hbox.getChildren().addAll(player1, score1, trainCards1, tickets1, guide, menuBar, player2, score2, trainCards2, tickets2);       
         return hbox;
-    }
-  
-    // ****************************************************** ADD STACKPANE TOP
-    
-    // Uses stack pane to create the "T" Button / adds to the right side of HBox
-    private void addStackPaneTop(HBox hb)
-    {
-        StackPane stack = new StackPane();
-        
-        Rectangle startIcon = new Rectangle(30.0, 25.0);
-        startIcon.setFill(new LinearGradient(0,0,0,1, true, CycleMethod.NO_CYCLE,
-            new Stop[]{
-            new Stop(0,Color.web("#4977A3")),
-            new Stop(0.5, Color.web("#B0C6DA")),
-            new Stop(1,Color.web("#9CB6CF")),}));
-        startIcon.setStroke(Color.web("#D0E6FA"));
-        startIcon.setArcHeight(3.5);
-        startIcon.setArcWidth(3.5);
-        
-        Text showTCards = new Text("T");
-        showTCards.setFont(Font.font("Verdana", FontWeight.BOLD, 18));
-        showTCards.setFill(Color.WHITE);
-        showTCards.setStroke(Color.web("#7080A0")); 
-        
-        stack.getChildren().addAll(startIcon, showTCards);
-        stack.setAlignment(Pos.CENTER_RIGHT);
-        // Add offset to right for "T" to compensate for RIGHT 
-        // alignment of all nodes
-        StackPane.setMargin(showTCards, new Insets(0, 10, 0, 0));
-        
-        hb.getChildren().add(stack);
-        HBox.setHgrow(stack, Priority.ALWAYS);        
-    }
+    } 
 
     // ************************************************************************** BEGIN LEFT BORDERPANE (FLOWPANE)
     
@@ -411,53 +683,132 @@ public class Ticket2RideView extends Application
     private FlowPane addFlowPaneLeft()  // for left side (Player1er 1)
     {
         FlowPane flow = new FlowPane();
-        flow.setPadding(new Insets(20, 0, 5, 0));
+        flow.setPadding(new Insets(7, 0, 5, 0));
         flow.setVgap(4);
         flow.setHgap(4);
         flow.setPrefWrapLength(85);
         flow.setStyle("-fx-background-color: DAE6F3;");
+        
+        // *************************************************** left_TC_1 BUTTON      
 
-        // Array for 4 Train Cards for Player1er #1 (on left)
-        ImageView trainCards[] = new ImageView[4];
+        Image imageDecline1 = new Image(getClass().getResourceAsStream(player1TrainCard1.getJPGImage()));
+        left_TC_1.setGraphic(new ImageView(imageDecline1));
         
-        trainCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player1TrainCard1.getJPGImage())));
-        flow.getChildren().add(trainCards[0]);        
+        DropShadow shadow = new DropShadow();
+        left_TC_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_TC_1.setEffect(shadow); } });
+        
+        left_TC_1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player1TrainCard1 Button has been clicked!"); } }); 
 
-        trainCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player1TrainCard2.getJPGImage())));      
-        flow.getChildren().add(trainCards[1]);             
-            
-        trainCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player1TrainCard3.getJPGImage())));       
-        flow.getChildren().add(trainCards[2]);              
-            
-        trainCards[3] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player1TrainCard4.getJPGImage())));   
-        flow.getChildren().add(trainCards[3]);              
+        flow.getChildren().add(left_TC_1);
         
-        // Array for 3 Destination Cards for Player1er #1 (on left)
-        ImageView destinationCards[] = new ImageView[3];
+        // *************************************************** left_TC_2 BUTTON      
+
+        Image imageDecline2 = new Image(getClass().getResourceAsStream(player1TrainCard2.getJPGImage()));
+        left_TC_2.setGraphic(new ImageView(imageDecline2));
         
-        destinationCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket1_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[0]);              
-            
-        destinationCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket2_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[1]);              
-            
-        destinationCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket3_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[2]);              
-      
+        left_TC_2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_TC_2.setEffect(shadow); } });
+        
+        left_TC_2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player1TrainCard2 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_TC_2);
+        
+        // *************************************************** left_TC_3 BUTTON      
+
+        Image imageDecline3 = new Image(getClass().getResourceAsStream(player1TrainCard3.getJPGImage()));
+        left_TC_3.setGraphic(new ImageView(imageDecline3));
+
+        left_TC_3.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_TC_3.setEffect(shadow); } });
+        
+        left_TC_3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player1TrainCard3 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_TC_3);
+        
+        // *************************************************** left_TC_4 BUTTON      
+
+        Image imageDecline4 = new Image(getClass().getResourceAsStream(player1TrainCard4.getJPGImage()));
+        left_TC_4.setGraphic(new ImageView(imageDecline4));
+
+        left_TC_4.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_TC_4.setEffect(shadow); } });
+        
+        left_TC_4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player1TrainCard4 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_TC_4);
+
+        // *************************************************** left_DT_1 BUTTON      
+
+        Image imageDecline5 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale58.jpg"));
+        left_DT_1.setGraphic(new ImageView(imageDecline5));
+
+        left_DT_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_DT_1.setEffect(shadow); } });
+        
+        left_DT_1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 1 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_DT_1);
+        
+        // *************************************************** left_DT_2 BUTTON      
+
+        Image imageDecline6 = new Image(getClass().getResourceAsStream("graphics/Ticket2_scale58.jpg"));
+        left_DT_2.setGraphic(new ImageView(imageDecline6));
+        
+        left_DT_2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_DT_2.setEffect(shadow); } });
+        
+        left_DT_2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 2 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_DT_2);       
+        
+        // *************************************************** left_DT_3 BUTTON      
+
+        Image imageDecline7 = new Image(getClass().getResourceAsStream("graphics/Ticket3_scale58.jpg"));
+        left_DT_3.setGraphic(new ImageView(imageDecline7));
+
+        left_DT_3.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    left_DT_3.setEffect(shadow); } });
+        
+        left_DT_3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 3 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(left_DT_3);       
+
         return flow;
     }
     
@@ -470,7 +821,7 @@ public class Ticket2RideView extends Application
         StackPane stack = new StackPane();
         
         ImageView boardImage = new ImageView(
-        new Image(Ticket2RideView.class.getResourceAsStream("pic38674.jpg")));
+        new Image(Ticket2RideView.class.getResourceAsStream("graphics/pic38674.jpg")));
       
         // ***
         GridPane grid = new GridPane();
@@ -511,52 +862,138 @@ public class Ticket2RideView extends Application
     // ************************************************************************** BEGIN RIGHT BORDERPANE (FLOWPANE)
     
     // Creates Vertical Display of Train & Destination Cards
-    private FlowPane addFlowPaneRight()  // for right side (Player1er 2)
+    private FlowPane addFlowPaneRight()  // for right side (Player 2)
     {
         FlowPane flow = new FlowPane();
-        flow.setPadding(new Insets(20, 0, 5, 0));
+        flow.setPadding(new Insets(7, 0, 5, 0));
         flow.setVgap(4);
         flow.setHgap(4);
         flow.setPrefWrapLength(85);
         flow.setStyle("-fx-background-color: DAE6F3;");
+        
+        // ************************************************** right_TC_1 BUTTON      
 
-        // Array for 4 Train Cards for Player1er #1 (on left)
-        ImageView trainCards[] = new ImageView[4];   
-        trainCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player2TrainCard1.getJPGImage())));       
-        flow.getChildren().add(trainCards[0]);        
-        trainCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player2TrainCard2.getJPGImage())));                           
-        flow.getChildren().add(trainCards[1]);                         
-        trainCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player2TrainCard3.getJPGImage())));       
-        flow.getChildren().add(trainCards[2]);                          
-        trainCards[3] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            player2TrainCard4.getJPGImage())));       
-        flow.getChildren().add(trainCards[3]);              
+        Image imageDecline8 = new Image(getClass().getResourceAsStream(player2TrainCard1.getJPGImage()));
+        right_TC_1.setGraphic(new ImageView(imageDecline8));
+        // leftTrainCard_1.setPrefSize(100, 20);
         
-        // Array for 3 Destination Cards for Player #1 (on left)
-        ImageView destinationCards[] = new ImageView[3];
+        DropShadow shadow = new DropShadow();
+        right_TC_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_TC_1.setEffect(shadow); } });
         
-        destinationCards[0] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket1_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[0]);              
-            
-        destinationCards[1] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket2_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[1]);              
-            
-        destinationCards[2] = new ImageView(
-            new Image(Ticket2RideView.class.getResourceAsStream(
-            "Ticket3_scale58.jpg")));        
-        flow.getChildren().add(destinationCards[2]);              
-      
+        right_TC_1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player2TrainCard1 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_TC_1);
+        
+        // ************************************************** right_TC_2 BUTTON      
+
+        Image imageDecline9 = new Image(getClass().getResourceAsStream(player2TrainCard2.getJPGImage()));
+        right_TC_2.setGraphic(new ImageView(imageDecline9));
+        // leftTrainCard_2.setPrefSize(100, 20);
+        
+        //DropShadow shadow = new DropShadow();
+        right_TC_2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_TC_2.setEffect(shadow); } });
+        
+        right_TC_2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player2TrainCard2 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_TC_2);
+        
+        // ************************************************** right_TC_3 BUTTON      
+
+        Image imageDecline10 = new Image(getClass().getResourceAsStream(player2TrainCard3.getJPGImage()));
+        right_TC_3.setGraphic(new ImageView(imageDecline10));
+
+        right_TC_3.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_TC_3.setEffect(shadow); } });
+        
+        right_TC_3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player2TrainCard3 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_TC_3);
+        
+        // ************************************************** right_TC_4 BUTTON      
+
+        Image imageDecline11 = new Image(getClass().getResourceAsStream(player2TrainCard4.getJPGImage()));
+        right_TC_4.setGraphic(new ImageView(imageDecline11));
+
+        right_TC_4.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_TC_4.setEffect(shadow); } });
+        
+        right_TC_4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player2TrainCard4 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_TC_4);
+
+        // ************************************************** right_DT_1 BUTTON      
+
+        Image imageDecline12 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale58.jpg"));
+        right_DT_1.setGraphic(new ImageView(imageDecline12));
+
+        right_DT_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_DT_1.setEffect(shadow); } });
+        
+        right_DT_1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 1 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_DT_1);
+        
+        // ************************************************** right_DT_2 BUTTON      
+
+        Image imageDecline13 = new Image(getClass().getResourceAsStream("graphics/Ticket2_scale58.jpg"));
+        right_DT_2.setGraphic(new ImageView(imageDecline13));
+
+        right_DT_2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_DT_2.setEffect(shadow); } });
+        
+        right_DT_2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 2 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_DT_2);       
+        
+        // ************************************************** right_DT_3 BUTTON      
+
+        Image imageDecline14 = new Image(getClass().getResourceAsStream("graphics/Ticket3_scale58.jpg"));
+        right_DT_3.setGraphic(new ImageView(imageDecline14));
+
+        right_DT_3.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    right_DT_3.setEffect(shadow); } });
+        
+        right_DT_3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Destination Ticket 3 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(right_DT_3);       
+
         return flow;
     }
 
@@ -596,42 +1033,116 @@ public class Ticket2RideView extends Application
     private FlowPane addFlowPaneBottom()    // for bottom strip
     {
         FlowPane flow = new FlowPane();
-        flow.setPadding(new Insets(5, 0, 5, 213));
+        flow.setPadding(new Insets(5, 0, 5, 155));
         flow.setVgap(4);
-        flow.setHgap(40);
+        flow.setHgap(0);
         flow.setPrefWrapLength(170);
         flow.setStyle("-fx-background-color: DAE6F3;");
 
-        ImageView pages[] = new ImageView[6];
-            pages[0] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "Box_scale79_vert.jpg")));           
-            flow.getChildren().add(pages[0]);
-            
-            pages[1] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "Passenger_scale79_vert.jpg")));                               
-            flow.getChildren().add(pages[1]);           
-            
-             pages[2] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "Reefer_scale79_vert.jpg")));              
-            flow.getChildren().add(pages[2]);
-            
-             pages[3] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "Hopper_scale79_vert.jpg")));       
-            flow.getChildren().add(pages[3]);
-            
-            pages[4] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "Caboose_scale79_vert.jpg")));      
-            flow.getChildren().add(pages[4]);
-            
-            pages[5] = new ImageView(
-                new Image(Ticket2RideView.class.getResourceAsStream(
-                "LPBonusCard_scale47.jpg")));        
-            flow.getChildren().add(pages[5]);
+        // ************************************************* bottom_TC_1 BUTTON      
+
+        Image imageDecline15 = new Image(getClass().getResourceAsStream("graphics/Box_scale79.jpg"));
+        bottom_TC_1.setGraphic(new ImageView(imageDecline15));
+        
+        DropShadow shadow = new DropShadow();
+        bottom_TC_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_TC_1.setEffect(shadow); } });
+        
+        bottom_TC_1.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Deck5TrainCard1 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_TC_1);        
+
+        // ************************************************* bottom_TC_2 BUTTON      
+
+        Image imageDecline16 = new Image(getClass().getResourceAsStream("graphics/Passenger_scale79.jpg"));
+        bottom_TC_2.setGraphic(new ImageView(imageDecline16));
+
+        bottom_TC_2.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_TC_2.setEffect(shadow); } });
+        
+        bottom_TC_2.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Deck5TrainCard2 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_TC_2); 
+        
+        // ************************************************* bottom_TC_3 BUTTON      
+
+        Image imageDecline17 = new Image(getClass().getResourceAsStream("graphics/Reefer_scale79.jpg"));
+        bottom_TC_3.setGraphic(new ImageView(imageDecline17));
+
+        bottom_TC_3.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_TC_3.setEffect(shadow); } });
+        
+        bottom_TC_3.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Deck5TrainCard3 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_TC_3); 
+        
+        // ************************************************* bottom_TC_4 BUTTON      
+
+        Image imageDecline18 = new Image(getClass().getResourceAsStream("graphics/Hopper_scale79.jpg"));
+        bottom_TC_4.setGraphic(new ImageView(imageDecline18));
+
+        bottom_TC_4.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_TC_4.setEffect(shadow); } });
+        
+        bottom_TC_4.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Deck5TrainCard4 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_TC_4);         
+        
+        // ************************************************* bottom_TC_5 BUTTON      
+
+        Image imageDecline19 = new Image(getClass().getResourceAsStream("graphics/Caboose_scale79.jpg"));
+        bottom_TC_5.setGraphic(new ImageView(imageDecline19));
+
+        bottom_TC_5.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_TC_5.setEffect(shadow); } });
+        
+        bottom_TC_5.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("Deck5TrainCard5 Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_TC_5);         
+
+        // ********************************************* bottom_LP_Bonus BUTTON      
+
+        Image imageDecline20 = new Image(getClass().getResourceAsStream("graphics/LPBonusCard_scale47.jpg"));
+        bottom_LP_Bonus.setGraphic(new ImageView(imageDecline20));
+
+        bottom_LP_Bonus.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    bottom_LP_Bonus.setEffect(shadow); } });
+        
+        bottom_LP_Bonus.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("LP Bonus Button has been clicked!"); } }); 
+
+        flow.getChildren().add(bottom_LP_Bonus);          
+
+        //"graphics/LPBonusCard_scale47.jpg")));        
 
         return flow;
     }
@@ -663,47 +1174,102 @@ public class Ticket2RideView extends Application
    
             return tcTemp;
         }
+ 
+    // ************************************************************************** FUNCTION: increaseScore()
+        
+        public String increaseScore(int playerNo, int claimValue)                                 // DON'T FORGET TO FIX THIS...................................
+        {
+            //String stringScore = "";
+            
+            if(playerNo == 1)
+            { integerScore1 += claimValue;
+                stringScore = integerScore1.toString(); }  
+
+            else if(playerNo == 2)
+            { integerScore2 += claimValue;
+                stringScore = integerScore2.toString(); }
+ 
+            return stringScore;
+        }
 
     // ************************************************************************** INTEGRATION TEST DRIVERS
         // DRIVERS TO TEST INTERFACE BETWEEN VIEW (GUI) AND CONTROLLER
         
-     public void setPlayer1Name(String p1)
+     public void setPlayerName(int playerNo, String playerName)
      {
-         Player1 = p1;  // This is "The Controller/Model's Player1
-     }
-        
-     public void setPlayer2Name(String p2)
-     {
-         Player2 = p2;  // This is "The Controller/Model's Player2
-     }       
+         if(playerNo == 1)
+             Player1 = playerName;  // This is "The Controller/Model's Player1
+         if(playerNo == 2)
+             Player2 = playerName;  // This is "The Controller/Model's Player2
+     }    
 
-    public TrainCard dispenseFaceUpTrainCard(TrainCard tcTemp)
-    {   /*  
-            THIS IS A TEMPORARY TEST DRIVER
-        This function should go into the Controller.
+    public TrainCard dispenseFaceUp5TrainCard(TrainCard faceUp5PlayersPick)
+    {   /*  THIS IS A TEMPORARY TEST DRIVER SUBSTITUTE FOR CONTROLLER FUNCTION
     
-        Input: "tcTemp" ... a TrainCard that the GUI wants to remove from board
-        This card should be added to the Player1er's hand.
+        Input: "faceUp5PlayersPick":traincard player wants to remove from board
+        Controller should add this card to the Player's hand.
     
         Output: The Controller should return a new TrainCard from the Deck
         (So that the GUI can replace the card that was removed from Board)
         */
+        
+    // Driver Program: Simulates Controller dealing out "random cards"
 
-        return deck5TrainCard5;         // Bogus: just a test experiment
+        Random rand = new Random();
+        int n = rand.nextInt(9) + 1;
+        
+        TrainCard tcTemp = new TrainCard();
+        
+        if(n == 1)
+            tcTemp.setTrainType("FREIGHT");
+        if(n == 2)
+            tcTemp.setTrainType("FREIGHT");        
+        if(n == 3)
+            tcTemp.setTrainType("HOPPER");       
+        if(n == 4)
+            tcTemp.setTrainType("COAL");        
+        if(n == 5)
+            tcTemp.setTrainType("CABOOSE");        
+        if(n == 6)
+            tcTemp.setTrainType("BOX");        
+        if(n == 7)
+            tcTemp.setTrainType("PASSENGER");        
+        if(n == 8)
+            tcTemp.setTrainType("TANKER");        
+        if(n == 9)
+            tcTemp.setTrainType("REEFER");
+
+        return tcTemp;
     }
 
+    // Driver Program: Simulates Controller dealing out "random cards"
     public TrainCard deal_1_CardFromDeck()
-    {   /*
-            THIS IS A TEMPORARY TEST DRIVER
-        This function should go into the Controller.
-    
-        Input: no input parameters
-    
-        Output: The Controller should return a new TrainCard from the Deck
-        This card should also be added to the Player1er's hand.
-        */        
+    { 
+        Random rand = new Random();
+        int n = rand.nextInt(9) + 1;
+        
+        TrainCard tcTemp = new TrainCard();
+        
+        if(n == 1)
+            tcTemp.setTrainType("FREIGHT");
+        if(n == 2)
+            tcTemp.setTrainType("FREIGHT");        
+        if(n == 3)
+            tcTemp.setTrainType("HOPPER");       
+        if(n == 4)
+            tcTemp.setTrainType("COAL");        
+        if(n == 5)
+            tcTemp.setTrainType("CABOOSE");        
+        if(n == 6)
+            tcTemp.setTrainType("BOX");        
+        if(n == 7)
+            tcTemp.setTrainType("PASSENGER");        
+        if(n == 8)
+            tcTemp.setTrainType("TANKER");        
+        if(n == 9)
+            tcTemp.setTrainType("REEFER");
 
-        return deck5TrainCard5;         // Bogus: just a test experiment
-    }       
+        return tcTemp;
+    }   
 }
     // THE END ******************************************************************

@@ -1,8 +1,8 @@
 /*  
     David Peacock / SN8583
     CS-401 Software Engineering
-    Due: Fri 9 Nov 2018 @ 11:59 PM
-    HW_5
+    Due: Fri 7 Dec 2018 @ 11:59 PM
+    HW_6
 */
 
 package ticket2rideview;
@@ -15,7 +15,7 @@ public class TrainCard
    // Default Constructor
    TrainCard()
    {    trainCarType = "CABOOSE";
-        jpgImage = "Caboose_scale79.jpg";
+        jpgImage = "graphics/Caboose_scale79.jpg";
    }
    
    // Constructor
@@ -25,38 +25,41 @@ public class TrainCard
    }   
    
    // Mutator Function
-    public String lookUpJPGImage4TrainCarType(String trainType)
+    private String lookUpJPGImage4TrainCarType(String trainType)
     {
         if (trainCarType == "LOCOMOTIVE")
-            jpgImage = "Locomotive_scale79.jpg";
+            jpgImage = "graphics/Locomotive_scale79.jpg";
         else if (trainCarType == "FREIGHT")
-            jpgImage = "Freight_scale79.jpg";
+            jpgImage = "graphics/Freight_scale79.jpg";
         else if (trainCarType == "HOPPER")
-            jpgImage = "Hopper_scale79.jpg";
+            jpgImage = "graphics/Hopper_scale79.jpg";
         else if (trainCarType == "COAL")
-            jpgImage = "Coal_scale79.jpg";        
+            jpgImage = "graphics/Coal_scale79.jpg";        
         else if (trainCarType == "CABOOSE")
-            jpgImage = "Caboose_scale79.jpg";    
+            jpgImage = "graphics/Caboose_scale79.jpg";    
         else if (trainCarType == "BOX")
-            jpgImage = "Box_scale79.jpg";    
+            jpgImage = "graphics/Box_scale79.jpg";    
         else if (trainCarType == "PASSENGER")
-            jpgImage = "Passenger_scale79.jpg";    
+            jpgImage = "graphics/Passenger_scale79.jpg";    
         else if (trainCarType == "TANKER")
-            jpgImage = "Tanker_scale79.jpg";    
+            jpgImage = "graphics/Tanker_scale79.jpg";    
         else if (trainCarType == "REEFER")
-            jpgImage = "Reefer_scale79.jpg";
+            jpgImage = "graphics/Reefer_scale79.jpg";
         
         return jpgImage;
     }
 
     // Getters   
-    public String getTrainType()
-    {
-        return trainCarType;
-    }
+    public String getTrainType() {
+        return trainCarType; }
 
-    public String getJPGImage()
+    public String getJPGImage() {
+        return jpgImage;    }
+    
+    // Setters
+    public void setTrainType(String trainType)
     {
-        return jpgImage;
-    }    
+        trainCarType = trainType;
+        jpgImage = lookUpJPGImage4TrainCarType(trainCarType);
+    }   
 }
