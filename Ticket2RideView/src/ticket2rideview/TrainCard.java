@@ -25,7 +25,7 @@ public class TrainCard
    }   
    
    // Mutator Function
-    private String lookUpJPGImage4TrainCarType(String trainType)
+    private String lookUpJPGImage4TrainCarType(String trainCarType)
     {
         if (trainCarType == "LOCOMOTIVE")
             jpgImage = "graphics/Locomotive_scale79.jpg";
