@@ -47,11 +47,18 @@ public class Ticket2RideView extends Application
 
     // ************************************************************************** INITIALIZE BOARD ELEMENTS
     
-    String Player1, Player2 = "Player";
+    // Variable Initializations
+    String Player1, Player2;
     int currentPlayer = 1;
+    
     Integer integerScore1 = 0000;
     Integer integerScore2 = 0000;
     String stringScore = "";
+    
+    String boardPic = "graphics/pic38674.jpg";
+    //String boardPic = "graphics/T2R_Swiss.jpg";
+    
+    Button centerBoardImage = new Button();
     
     // Initialize left_TC Buttons
     Button left_TC_1 = new Button();
@@ -108,7 +115,7 @@ public class Ticket2RideView extends Application
     // Markers are at start position (Initially)
     Markers player1Marker = new Markers(1, 0);
     Markers player2Marker = new Markers(2, 0);
- 
+
     // Initial Deck5 Train Card Values: Preset for show / Reset when game starts
     TrainCard deck5TrainCard1 = new TrainCard("BOX");
     TrainCard deck5TrainCard2 = new TrainCard("PASSENGER");    
@@ -117,19 +124,22 @@ public class Ticket2RideView extends Application
     TrainCard deck5TrainCard5 = new TrainCard("CABOOSE");    
     
     LPBonus longestPathBonus = new LPBonus();   
-    
-    Control Ctrl = new Control();
-   
+    Control Ctrl = new Control();                                               // new code added for Brennan *********************************************************************
+      
     // ************************************************************************** MAIN()
     
     public static void main(String[] args)
-    {  launch(Ticket2RideView.class, args); }
+    {
+        
+        launch(Ticket2RideView.class, args); }
 
     // ************************************************************************** START()
      
     @Override
     public void start(Stage stage)
     {  
+        //Controller control = new Controller();
+        
         // BorderPane is the scene root
         BorderPane root = new BorderPane();
         
@@ -201,7 +211,7 @@ public class Ticket2RideView extends Application
         player1.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    guide.setText("Player 1");
+                    guide.setText("Hello Player 1");
                     currentPlayer = 1;
                     System.out.println("Player1 Button has been clicked!"); } });
 
@@ -218,7 +228,7 @@ public class Ticket2RideView extends Application
         player2.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    guide.setText("Player 2");
+                    guide.setText("Hello Player 2");
                     currentPlayer = 2;
                     System.out.println("Player2 Button has been clicked!"); } });
 
@@ -235,8 +245,9 @@ public class Ticket2RideView extends Application
         
         score1.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
-                @Override public void handle(MouseEvent e) {
-                    System.out.println("Score 1 Button has been clicked!"); } });
+                @Override public void handle(MouseEvent e) {                   
+                    guide.setText("Score Player 1"); } });                                      
+                    //System.out.println("Score 1 Button has been clicked!"); } });
 
     // ************************************************************************** SCORE2 BUTTON
 
@@ -251,7 +262,8 @@ public class Ticket2RideView extends Application
         score2.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    System.out.println("Score2 Button has been clicked!"); } });       
+                    guide.setText("Score Player 2"); } });
+                    //System.out.println("Score2 Button has been clicked!"); } });       
 
     // ************************************************************************** TRAINCARDS1 BUTTON
         
@@ -266,7 +278,7 @@ public class Ticket2RideView extends Application
         trainCards1.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Ctrl.seeHand(1); } });
+                    guide.setText("P1 Traincard ThumbPrints"); } });
     
     // ************************************************************************** TRAINCARDS2 BUTTON
 
@@ -281,7 +293,9 @@ public class Ticket2RideView extends Application
         trainCards2.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    Ctrl.seeHand(2); } });           
+                    guide.setText("P2 Traincard ThumbPrints"); } });                   
+                    
+                    //System.out.println("TrainCards2 Button has been clicked!"); } });           
 
     // ************************************************************************** Tickets1 BUTTON
         
@@ -311,7 +325,7 @@ public class Ticket2RideView extends Application
         tickets2.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
-                    System.out.println("Tickets 2 Button has been clicked!"); } });       
+                    System.out.println("Tickets 2 Button has been clicked!"); } });                       
 
     // ************************************************************************** MAIN MENUBAR VBOX
         
@@ -330,12 +344,13 @@ public class Ticket2RideView extends Application
         vbox.setSpacing(10);        
         vbox.setPadding(new Insets(0, 10, 0, 10));
 
-    // *********************************************************** GAME SUBMENU
-
-        Menu menuGame = new Menu("Game");       
-        Menu menuSetPlayer = new Menu("Set Players");
+    // ************************************************************** GAME MENU
+        Menu menuGame = new Menu("Game");
         
-    // ******************************************************* SET PLAYER1 NAME
+    // ************************************************************ SET PLAYERS       
+        Menu menuSetPlayer = new Menu("Set Player Names");
+        
+    // ******************************************************* SET PLAYER1 NAME    
     
         MenuItem setNamePlayer1 = new MenuItem("Player 1 Name");
         setNamePlayer1.setOnAction((ActionEvent t) -> {
@@ -367,8 +382,36 @@ public class Ticket2RideView extends Application
 
         menuSetPlayer.getItems().add(setNamePlayer1);
         menuSetPlayer.getItems().add(setNamePlayer2);            
-        menuGame.getItems().addAll(menuSetPlayer);         
-
+        menuGame.getItems().addAll(menuSetPlayer);             
+        
+    // ****************************************************** CHOOSE GAME BOARD              
+        Menu menuSetGameBoard = new Menu("Select Game Board");
+       
+    // **************************************************** CHOOSE GAME BOARD 1            
+   
+        MenuItem setGameBoard1_US_Canada = new MenuItem("US/Canada Game Board");
+        setGameBoard1_US_Canada.setOnAction((ActionEvent t) -> {
+            guide.setText("You chose US/Canada ");
+            Image imageDecline99 = new Image(getClass().getResourceAsStream("graphics/pic38674.jpg"));
+            centerBoardImage.setGraphic(new ImageView(imageDecline99));
+            //boardPic = "graphics/pic38674.jpg";           
+            vbox.setVisible(true);
+        });
+        
+    // **************************************************** CHOOSE GAME BOARD 2            
+        
+        MenuItem setGameBoard2_Swiss = new MenuItem("Swiss Game Board");
+        setGameBoard2_Swiss.setOnAction((ActionEvent t) -> {
+            guide.setText("You chose Swiss ");
+            Image imageDecline101 = new Image(getClass().getResourceAsStream("graphics/T2R_Swiss.jpg"));
+            centerBoardImage.setGraphic(new ImageView(imageDecline101));
+            //boardPic = "graphics/T2R_Swiss.jpg";
+            vbox.setVisible(true);
+        });        
+        
+        menuSetGameBoard.getItems().add(setGameBoard1_US_Canada);
+        menuSetGameBoard.getItems().add(setGameBoard2_Swiss);
+        
     // ************************************************************* START GAME
    
         MenuItem startGame = new MenuItem("Start Game");
@@ -435,7 +478,8 @@ public class Ticket2RideView extends Application
         
             vbox.setVisible(true);
         });
-
+        
+        
     // ************************************************************* GAME RULES
     
             // THIS IS FOR FUTURE DEVELOPMENT
@@ -460,7 +504,7 @@ public class Ticket2RideView extends Application
             System.exit(0);
         });
 
-        menuGame.getItems().addAll(menuSetPlayer, startGame, showGameRules, clear,
+        menuGame.getItems().addAll(menuSetGameBoard, menuSetPlayer, startGame, showGameRules, clear,
                                             new SeparatorMenuItem(), exit);
 
     // ************************************************** DRAW TRAIN CARDS MENU
@@ -616,7 +660,7 @@ public class Ticket2RideView extends Application
         
         menuDrawTrainCard2.getItems().add(TC2_Choice1_FaceUp);
         menuDrawTrainCard2.getItems().add(TC2_Choice2_FromDeck);            
-        menuTrainCards.getItems().addAll(menuDrawTrainCard2);       
+        menuTrainCards.getItems().addAll(menuDrawTrainCard2);      
 
     // ***************************************************** CLAIM-A-ROUTE MENU
    
@@ -779,7 +823,7 @@ public class Ticket2RideView extends Application
 
         // *************************************************** left_DT_1 BUTTON      
 
-        Image imageDecline5 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale58.jpg"));
+        Image imageDecline5 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale70.jpg"));
         left_DT_1.setGraphic(new ImageView(imageDecline5));
 
         left_DT_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
@@ -839,14 +883,43 @@ public class Ticket2RideView extends Application
     {
         StackPane stack = new StackPane();
         
-        ImageView boardImage = new ImageView(
-        new Image(Ticket2RideView.class.getResourceAsStream("graphics/pic38674.jpg")));
+        //ImageView boardImage = new ImageView(
+        
+        //new Image(Ticket2RideView.class.getResourceAsStream(boardPic)));
+        //new Image(Ticket2RideView.class.getResourceAsStream("graphics/pic38674.jpg")));
+        //new Image(Ticket2RideView.class.getResourceAsStream("graphics/T2R_Swiss.jpg")));  
+
+   
+        // *******
+        // *************************************************** centerBoardImage BUTTON      
+
+        
+        
+        
+        Image imageDecline69 = new Image(getClass().getResourceAsStream(boardPic));       
+        //Image imageDecline69 = new Image(getClass().getResourceAsStream(boardPic));
+        centerBoardImage.setGraphic(new ImageView(imageDecline69));
+        
+        DropShadow shadow = new DropShadow();
+        centerBoardImage.addEventHandler(MouseEvent.MOUSE_ENTERED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    centerBoardImage.setEffect(shadow); } });
+        
+        centerBoardImage.addEventHandler(MouseEvent.MOUSE_CLICKED,
+            new EventHandler<MouseEvent>() {
+                @Override public void handle(MouseEvent e) {
+                    System.out.println("player1TrainCard1 Button has been clicked!"); } }); 
       
+
+        // *******
+        
+
         // ***
         GridPane grid = new GridPane();
         grid = addGridPaneCenter(stack);
 
-        stack.getChildren().add(boardImage); 
+        stack.getChildren().add(centerBoardImage); 
         stack.getChildren().add(grid);
         stack.getChildren().addAll();
         stack.setAlignment(Pos.CENTER);
@@ -964,7 +1037,7 @@ public class Ticket2RideView extends Application
 
         // ************************************************** right_DT_1 BUTTON      
 
-        Image imageDecline12 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale58.jpg"));
+        Image imageDecline12 = new Image(getClass().getResourceAsStream("graphics/Ticket1_scale70.jpg"));
         right_DT_1.setGraphic(new ImageView(imageDecline12));
 
         right_DT_1.addEventHandler(MouseEvent.MOUSE_ENTERED,
@@ -1198,8 +1271,6 @@ public class Ticket2RideView extends Application
         
         public String increaseScore(int playerNo, int claimValue)                                 // DON'T FORGET TO FIX THIS...................................
         {
-            //String stringScore = "";
-            
             if(playerNo == 1)
             { integerScore1 += claimValue;
                 stringScore = integerScore1.toString(); }  
@@ -1211,7 +1282,7 @@ public class Ticket2RideView extends Application
             return stringScore;
         }
 
-    // ************************************************************************** INTEGRATION TEST DRIVERS      DRIVERS NO LONGER NEEDED
+    // ************************************************************************** INTEGRATION TEST DRIVERS
         // DRIVERS TO TEST INTERFACE BETWEEN VIEW (GUI) AND CONTROLLER
     /*    
      public void setPlayerName(int playerNo, String playerName)
@@ -1222,22 +1293,18 @@ public class Ticket2RideView extends Application
              Player2 = playerName;  // This is "The Controller/Model's Player2
      }    
 
-    //DRIVER NO LONGER NEEDED 
-    
-     
-    /*public TrainCard dispenseFaceUp5TrainCard(TrainCard faceUp5PlayersPick)
-    {  
-    /*  THIS IS A TEMPORARY TEST DRIVER SUBSTITUTE FOR CONTROLLER FUNCTION
+    public TrainCard dispenseFaceUp5TrainCard(TrainCard faceUp5PlayersPick)
+    {   /*  THIS IS A TEMPORARY TEST DRIVER SUBSTITUTE FOR CONTROLLER FUNCTION
     
         Input: "faceUp5PlayersPick":traincard player wants to remove from board
         Controller should add this card to the Player's hand.
     
         Output: The Controller should return a new TrainCard from the Deck
         (So that the GUI can replace the card that was removed from Board)
-    
+        */
         
     // Driver Program: Simulates Controller dealing out "random cards"
-
+        /*
         Random rand = new Random();
         int n = rand.nextInt(9) + 1;
         
@@ -1263,13 +1330,10 @@ public class Ticket2RideView extends Application
             tcTemp.setTrainType("REEFER");
 
         return tcTemp;
-    }*/
-    
-    
-    
+    }
+
     // Driver Program: Simulates Controller dealing out "random cards"
-    /*  DRIVER NO LONGER NEEDED
-    public TrainCard deal_1_CardFromDeck()
+    public TrainCard deal_1_CardFromDeck(int owner)
     { 
         Random rand = new Random();
         int n = rand.nextInt(9) + 1;
@@ -1277,7 +1341,7 @@ public class Ticket2RideView extends Application
         TrainCard tcTemp = new TrainCard();
         
         if(n == 1)
-            tcTemp.setTrainType("FREIGHT");
+            tcTemp.setTrainType("LOCOMOTIVE");
         if(n == 2)
             tcTemp.setTrainType("FREIGHT");        
         if(n == 3)
