@@ -522,8 +522,10 @@ public class Ticket2RideView extends Application
         TC1_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
             System.out.println("TC1: Draw from the deck\n");
 
-        TrainCard newTrainCard1 = Ctrl.getPlayerCHand(currentPlayer, Ctrl.getPlayer(currentPlayer).CHand.size()-1);                       // ******************************************** METHOD FOR CONTROLLER !!!
-
+            
+        TrainCard newTrainCard1 = Ctrl.D.draw();                                // ******************************************** METHOD FOR CONTROLLER !!!
+        Ctrl.getPlayer(currentPlayer).addToCHand(newTrainCard1);
+        
             if(currentPlayer == 1)  {
                 Image imageDecline_D = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
                 left_TC_1.setGraphic(new ImageView(imageDecline_D));    }
@@ -589,16 +591,26 @@ public class Ticket2RideView extends Application
         TC2_Choice2_FromDeck.setOnAction((ActionEvent t) -> {
             System.out.println("TC2: Draw from the deck\n");
 
-        TrainCard newTrainCard1 = Ctrl.D.draw();                        // ******************************************** METHOD FOR CONTROLLER !!!
-
+        TrainCard newTrainCard1 = Ctrl.D.draw();                                // ******************************************** METHOD FOR CONTROLLER !!!
+        Ctrl.getPlayer(currentPlayer).addToCHand(newTrainCard1);
+        
+        
             if(currentPlayer == 1)  {
                 Image imageDecline_I = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
                 left_TC_2.setGraphic(new ImageView(imageDecline_I));    }
             
             else if(currentPlayer == 2) {
                 Image imageDecline_J = new Image(getClass().getResourceAsStream(newTrainCard1.getJPGImage()));           
-                right_TC_2.setGraphic(new ImageView(imageDecline_J));    }             
-
+                right_TC_2.setGraphic(new ImageView(imageDecline_J));    } 
+            
+            if(currentPlayer == 1){
+                currentPlayer = 2;
+                guide.setText("It is "+ Player2 +"'s turn.");
+            }
+            else{
+                currentPlayer = 1;
+                guide.setText("It is "+ Player1 +"'s turn.");
+            }
             vbox.setVisible(true);
         });
         

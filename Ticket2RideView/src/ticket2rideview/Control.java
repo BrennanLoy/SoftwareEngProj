@@ -14,6 +14,7 @@ import java.util.Random;
 public class Control{
     
     public class Player{
+        
         String name;
         ArrayList<TrainCard> CHand = new ArrayList<>();
         ArrayList<Ticket> THand = new ArrayList<>();
@@ -25,9 +26,11 @@ public class Control{
         void setName(String s){
             name = s;
         }
+        
         void addToCHand(TrainCard t){
             this.CHand.add(t);
         }
+        
         void createHand(Deck D, TDeck T){
             for(int i = 0; i < 4; i++){
                 CHand.add(D.draw());
