@@ -426,7 +426,7 @@ public class Ticket2RideView extends Application
         //Ctrl.seeHand(1);                                                          ******Testing purpose
         
        
-        TrainCard tempTrainCard = Ctrl.getPlayerCHand(1,0);                        // ******************************************** Control Done
+        TrainCard tempTrainCard = Ctrl.getPlayerCHand(1,0);                         // ******************************************** Control Done
         Image imageDecline_a = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         left_TC_1.setGraphic(new ImageView(imageDecline_a));           
         
@@ -463,22 +463,27 @@ public class Ticket2RideView extends Application
         // *******
         
         tempTrainCard = Ctrl.D.draw();                                  // ******************************************** Control Done
+        tempTrainCard = deck5TrainCard1;
         Image imageDecline_i = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         bottom_TC_1.setGraphic(new ImageView(imageDecline_i));           
         
-        tempTrainCard = Ctrl.D.draw();                                  // ******************************************** Control Done
+        tempTrainCard = Ctrl.D.draw(); 
+        tempTrainCard = deck5TrainCard2;// ******************************************** Control Done
         Image imageDecline_j = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         bottom_TC_2.setGraphic(new ImageView(imageDecline_j));            
             
-        tempTrainCard = Ctrl.D.draw();                                   // ******************************************** Control Done
+        tempTrainCard = Ctrl.D.draw(); 
+        tempTrainCard = deck5TrainCard3;// ******************************************** Control Done
         Image imageDecline_k = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         bottom_TC_3.setGraphic(new ImageView(imageDecline_k));           
         
-        tempTrainCard = Ctrl.D.draw();                                   // ******************************************** Control Done
+        tempTrainCard = Ctrl.D.draw();  
+        tempTrainCard = deck5TrainCard4;// ******************************************** Control Done
         Image imageDecline_l = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         bottom_TC_4.setGraphic(new ImageView(imageDecline_l));       
         
-        tempTrainCard = Ctrl.D.draw();                                   // ******************************************** Control Done
+        tempTrainCard = Ctrl.D.draw();  
+        tempTrainCard = deck5TrainCard5;// ******************************************** Control Done
         Image imageDecline_m = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
         bottom_TC_5.setGraphic(new ImageView(imageDecline_l));     
 
@@ -539,34 +544,36 @@ public class Ticket2RideView extends Application
             int tcNo = scan.nextInt();
             
             TrainCard faceUp5TrainCardChoice = new TrainCard();
+            TrainCard faceUp5TrainCardReplacement = new TrainCard();
+            faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!! 
+            System.out.println(faceUp5TrainCardChoice.trainCarType);
+            
             switch(tcNo){
                 case 1:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard1.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard1;
                     deck5TrainCard1 = faceUp5TrainCardChoice;
                     break;
                 case 2:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard2.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard2;
                     deck5TrainCard2 = faceUp5TrainCardChoice;
                     break;
                 case 3:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard3.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard3;
                     deck5TrainCard3 = faceUp5TrainCardChoice;
                     break;
                 case 4:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard4.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard4;
                     deck5TrainCard4 = faceUp5TrainCardChoice;
                     break;
                 case 5:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard5.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard5;
                     deck5TrainCard5 = faceUp5TrainCardChoice;
                     break;
                      
             }
             Ctrl.getPlayer(currentPlayer).addToCHand(faceUp5TrainCardChoice);
             
-            TrainCard faceUp5TrainCardReplacement = new TrainCard();
-            faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!! 
-            System.out.println(faceUp5TrainCardChoice.trainCarType);
+            
             
             if(currentPlayer == 1)  {
                 
@@ -635,39 +642,45 @@ public class Ticket2RideView extends Application
             int tcNo = scan.nextInt();
             
             TrainCard faceUp5TrainCardChoice = new TrainCard();
+            TrainCard faceUp5TrainCardReplacement = new TrainCard();
+            faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!! 
+            System.out.println(faceUp5TrainCardChoice.trainCarType);
+            
             switch(tcNo){
                 case 1:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard1.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard1;
+                    deck5TrainCard1 = faceUp5TrainCardChoice;
                     break;
                 case 2:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard2.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard2;
+                    deck5TrainCard2 = faceUp5TrainCardChoice;
                     break;
                 case 3:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard3.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard3;
+                    deck5TrainCard3 = faceUp5TrainCardChoice;
                     break;
                 case 4:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard4.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard4;
+                    deck5TrainCard4 = faceUp5TrainCardChoice;
                     break;
                 case 5:
-                    faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard5.trainCarType);
+                    faceUp5TrainCardChoice = deck5TrainCard5;
+                    deck5TrainCard5 = faceUp5TrainCardChoice;
                     break;
                      
             }
             Ctrl.getPlayer(currentPlayer).addToCHand(faceUp5TrainCardChoice);
-            
-            TrainCard faceUp5TrainCardReplacement = new TrainCard();
-            faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!! 
             
             
             
             if(currentPlayer == 1)  {
                 
                 Image imageDecline_A = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
-                left_TC_2.setGraphic(new ImageView(imageDecline_A));    }
+                left_TC_1.setGraphic(new ImageView(imageDecline_A));    }
             
             else if(currentPlayer == 2) {
                 Image imageDecline_B = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
-                right_TC_2.setGraphic(new ImageView(imageDecline_B));    }             
+                right_TC_1.setGraphic(new ImageView(imageDecline_B));    }               
 
             if(currentPlayer == 1){
                 currentPlayer = 2;
@@ -676,20 +689,20 @@ public class Ticket2RideView extends Application
             else{
                 currentPlayer = 1;
                 guide.setText("It is "+ Player1 +"'s turn.");
-            }
+            }        
             
-            Image imageDecline_H = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
+            Image imageDecline_C = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
             
             if(tcNo == 1)
-                bottom_TC_1.setGraphic(new ImageView(imageDecline_H)); 
+                bottom_TC_1.setGraphic(new ImageView(imageDecline_C)); 
             if(tcNo == 2)
-                bottom_TC_2.setGraphic(new ImageView(imageDecline_H));           
+                bottom_TC_2.setGraphic(new ImageView(imageDecline_C));           
             if(tcNo == 3)
-                bottom_TC_3.setGraphic(new ImageView(imageDecline_H));            
+                bottom_TC_3.setGraphic(new ImageView(imageDecline_C));            
             if(tcNo == 4)
-                bottom_TC_4.setGraphic(new ImageView(imageDecline_H));            
+                bottom_TC_4.setGraphic(new ImageView(imageDecline_C));            
             if(tcNo == 5)
-                bottom_TC_5.setGraphic(new ImageView(imageDecline_H));            
+                bottom_TC_5.setGraphic(new ImageView(imageDecline_C));            
 
             vbox.setVisible(true);
         });
