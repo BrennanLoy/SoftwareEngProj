@@ -565,6 +565,7 @@ public class Ticket2RideView extends Application
                     deck5TrainCard4 = faceUp5TrainCardReplacement;
                     break;
                 case 5:
+                    System.out.println(deck5TrainCard5.trainCarType);
                     faceUp5TrainCardChoice = deck5TrainCard5;
                     deck5TrainCard5 = faceUp5TrainCardReplacement;
                     break;
@@ -674,11 +675,11 @@ public class Ticket2RideView extends Application
             if(currentPlayer == 1)  {
                 
                 Image imageDecline_A = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
-                left_TC_1.setGraphic(new ImageView(imageDecline_A));    }
+                left_TC_2.setGraphic(new ImageView(imageDecline_A));    }
             
             else if(currentPlayer == 2) {
                 Image imageDecline_B = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
-                right_TC_1.setGraphic(new ImageView(imageDecline_B));    }               
+                right_TC_2.setGraphic(new ImageView(imageDecline_B));    }               
 
             if(currentPlayer == 1){
                 currentPlayer = 2;
