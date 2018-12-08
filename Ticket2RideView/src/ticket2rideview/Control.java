@@ -55,76 +55,7 @@ public class Control{
             
         }
         
-        public TrainCard deal_1_CardFromDeck(){
-            Random rand = new Random();
-            int x = rand.nextInt(8);
-            switch(x){
-                case 0:
-                    if(purpleNum == 0)
-                        this.draw();
-                    else{
-                        purpleNum--;
-                        totalC--;
-                        return(new TrainCard("Purple"));}
-                case 1:
-                    if(whiteNum == 0)
-                       this.draw();
-                    else{
-                        whiteNum--;
-                        totalC--;
-                       return(new TrainCard("White"));}
-                case 2:
-                    if(blueNum == 0)
-                        this.draw();
-                    else{
-                        blueNum--;
-                        totalC--;
-                        return(new TrainCard("Blue"));}
-                case 3:
-                    if(yellowNum == 0)
-                        this.draw();
-                    else{
-                        yellowNum--;
-                        totalC--;
-                        return(new TrainCard("Yellow"));}
-                case 4:
-                    if(orangeNum == 0)
-                        this.draw();
-                    else{
-                        orangeNum--;
-                        totalC--;
-                        return(new TrainCard("Orange"));}
-                case 5:
-                    if(blackNum == 0)
-                        this.draw();
-                    else{
-                        blackNum--;
-                        totalC--;
-                        return(new TrainCard("Black"));}
-                case 6:
-                    if(redNum == 0)
-                        this.draw();
-                    else{
-                        redNum--;
-                        totalC--;
-                        return(new TrainCard("Red"));}
-                case 7:
-                    if(greenNum == 0)
-                        this.draw();
-                    else{
-                        greenNum--;
-                        totalC--;
-                        return(new TrainCard("Green"));}
-                case 8: 
-                    if(locoNum == 0)
-                        this.draw();
-                    else{
-                        locoNum--;
-                        totalC--;
-                        return(new TrainCard("Wild"));}
-            }
-            return (new TrainCard("Wild"));
-        }
+        
         public TrainCard draw(){
             Random rand = new Random();
             int x = rand.nextInt(8);
@@ -173,7 +104,7 @@ public class Control{
         }
         public TrainCard drawFaceUp5(int i){
             
-            return(faceUp5.get(i));
+            return(faceUp5.get(i-1));
             
             
         }

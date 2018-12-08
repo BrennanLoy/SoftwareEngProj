@@ -472,7 +472,11 @@ public class Ticket2RideView extends Application
         
         tempTrainCard = Ctrl.D.faceUp5.get(3);                                   // ******************************************** Control Done
         Image imageDecline_l = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
-        bottom_TC_4.setGraphic(new ImageView(imageDecline_l));               
+        bottom_TC_4.setGraphic(new ImageView(imageDecline_l));       
+        
+        tempTrainCard = Ctrl.D.faceUp5.get(4);                                   // ******************************************** Control Done
+        Image imageDecline_m = new Image(getClass().getResourceAsStream(tempTrainCard.getJPGImage()));           
+        bottom_TC_5.setGraphic(new ImageView(imageDecline_l));     
 
         guide.setText("It is "+ Player1 +"'s turn.");
         
@@ -528,10 +532,13 @@ public class Ticket2RideView extends Application
             System.out.println("Choose 1-5");
 
             Scanner scan = new Scanner(System.in);
-            int tcNo = scan.nextInt()-1;
+            int tcNo = scan.nextInt();
             
             TrainCard faceUp5TrainCardChoice = new TrainCard();
             faceUp5TrainCardChoice = Ctrl.D.drawFaceUp5(tcNo);
+            Ctrl.getPlayer(currentPlayer).addToCHand(faceUp5TrainCardChoice);
+            
+            
             
             if(currentPlayer == 1)  {
                 
@@ -545,6 +552,7 @@ public class Ticket2RideView extends Application
             TrainCard faceUp5TrainCardReplacement = new TrainCard();
             faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!!           
 
+            
             Image imageDecline_C = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
             
             if(tcNo == 1)
@@ -602,6 +610,8 @@ public class Ticket2RideView extends Application
             
             TrainCard faceUp5TrainCardChoice = new TrainCard();
             faceUp5TrainCardChoice = Ctrl.D.drawFaceUp5(tcNo);
+            Ctrl.getPlayer(currentPlayer).addToCHand(faceUp5TrainCardChoice);
+            
             
             if(currentPlayer == 1)  {
                 Image imageDecline_F = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
@@ -611,8 +621,16 @@ public class Ticket2RideView extends Application
                 Image imageDecline_G = new Image(getClass().getResourceAsStream(faceUp5TrainCardChoice.getJPGImage()));           
                 right_TC_2.setGraphic(new ImageView(imageDecline_G));    }               
 
+            if(currentPlayer == 1){
+                currentPlayer = 2;
+                guide.setText("It is "+ Player2 +"'s turn.");
+            }
+            else{
+                currentPlayer = 1;
+                guide.setText("It is "+ Player1 +"'s turn.");
+            }
             TrainCard faceUp5TrainCardReplacement = new TrainCard();
-            faceUp5TrainCardReplacement = Ctrl.D.draw(faceUp5TrainCardChoice.trainCarType); // ******************************** METHOD FOR CONTROLLER !!!           
+            faceUp5TrainCardReplacement = Ctrl.D.draw();                        // ******************************** METHOD FOR CONTROLLER !!!           
 
             Image imageDecline_H = new Image(getClass().getResourceAsStream(faceUp5TrainCardReplacement.getJPGImage()));
             
