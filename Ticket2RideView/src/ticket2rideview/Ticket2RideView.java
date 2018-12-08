@@ -542,18 +542,23 @@ public class Ticket2RideView extends Application
             switch(tcNo){
                 case 1:
                     faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard1.trainCarType);
+                    deck5TrainCard1 = faceUp5TrainCardChoice;
                     break;
                 case 2:
                     faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard2.trainCarType);
+                    deck5TrainCard2 = faceUp5TrainCardChoice;
                     break;
                 case 3:
                     faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard3.trainCarType);
+                    deck5TrainCard3 = faceUp5TrainCardChoice;
                     break;
                 case 4:
                     faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard4.trainCarType);
+                    deck5TrainCard4 = faceUp5TrainCardChoice;
                     break;
                 case 5:
                     faceUp5TrainCardChoice = Ctrl.D.draw(deck5TrainCard5.trainCarType);
+                    deck5TrainCard5 = faceUp5TrainCardChoice;
                     break;
                      
             }
@@ -561,7 +566,7 @@ public class Ticket2RideView extends Application
             
             TrainCard faceUp5TrainCardReplacement = new TrainCard();
             faceUp5TrainCardReplacement = Ctrl.D.draw(); // ******************************** METHOD FOR CONTROLLER !!! 
-            
+            System.out.println(faceUp5TrainCardChoice.trainCarType);
             
             if(currentPlayer == 1)  {
                 
