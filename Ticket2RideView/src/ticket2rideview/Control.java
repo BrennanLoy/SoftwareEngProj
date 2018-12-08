@@ -48,7 +48,7 @@ public class Control{
         public int purpleNum,whiteNum,blueNum,yellowNum,orangeNum,blackNum,redNum,greenNum = 12;
         public int locoNum = 14;
         public int totalC =  110;
-        ArrayList<TrainCard> faceUp5 = new ArrayList<>();
+        //ArrayList<TrainCard> faceUp5 = new ArrayList<>();
         String card;
         
         
@@ -93,17 +93,6 @@ public class Control{
         }
         public TrainCard draw(String t){
             return(new TrainCard(t));
-        }
-        public void createFaceUp5(){
-            for(int i = 0; i < 5; i++){
-                faceUp5.add(this.draw());
-            }
-        }
-        public TrainCard drawFaceUp5(int i){
-            
-            return(faceUp5.get(i-1));
-            
-            
         }
     }
     
@@ -158,7 +147,7 @@ public class Control{
     void Start(){
         cplayer1.createHand(D, T);
         cplayer2.createHand(D, T);
-        D.createFaceUp5();
+        
         
     }
     
