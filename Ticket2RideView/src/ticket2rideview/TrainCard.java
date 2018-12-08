@@ -15,7 +15,7 @@ public class TrainCard
    // Default Constructor
    TrainCard()
    {    trainCarType = "CABOOSE";
-        jpgImage = "graphics/Caboose_scale79.jpg";
+        jpgImage = lookUpJPGImage4TrainCarType(trainCarType);
    }
    
    // Constructor
