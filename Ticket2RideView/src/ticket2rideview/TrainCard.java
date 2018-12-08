@@ -27,23 +27,23 @@ public class TrainCard
    // Mutator Function
     private String lookUpJPGImage4TrainCarType(String trainCarType)
     {
-        if (trainCarType == "LOCOMOTIVE")
+        if ("LOCOMOTIVE".equals(trainCarType))
             jpgImage = "graphics/Locomotive_scale79.jpg";
-        else if (trainCarType == "FREIGHT")
+        else if ("FREIGHT".equals(trainCarType))
             jpgImage = "graphics/Freight_scale79.jpg";
-        else if (trainCarType == "HOPPER")
+        else if ("HOPPER".equals(trainCarType))
             jpgImage = "graphics/Hopper_scale79.jpg";
-        else if (trainCarType == "COAL")
+        else if ("COAL".equals(trainCarType))
             jpgImage = "graphics/Coal_scale79.jpg";        
-        else if (trainCarType == "CABOOSE")
+        else if ("CABOOSE".equals(trainCarType))
             jpgImage = "graphics/Caboose_scale79.jpg";    
-        else if (trainCarType == "BOX")
+        else if ("BOX".equals(trainCarType))
             jpgImage = "graphics/Box_scale79.jpg";    
-        else if (trainCarType == "PASSENGER")
+        else if ("PASSENGER".equals(trainCarType))
             jpgImage = "graphics/Passenger_scale79.jpg";    
-        else if (trainCarType == "TANKER")
+        else if ("TANKER".equals(trainCarType))
             jpgImage = "graphics/Tanker_scale79.jpg";    
-        else if (trainCarType == "REEFER")
+        else if ("REEFER".equals(trainCarType))
             jpgImage = "graphics/Reefer_scale79.jpg";
         
         return jpgImage;

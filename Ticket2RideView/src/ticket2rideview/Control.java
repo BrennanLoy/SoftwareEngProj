@@ -51,9 +51,6 @@ public class Control{
         ArrayList<TrainCard> faceUp5 = new ArrayList<>();
         String card;
         
-        Deck(){
-            
-        }
         
         
         public TrainCard draw(){
